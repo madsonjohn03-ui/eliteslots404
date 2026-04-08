@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+</head>
+
+<body>
+
+<h1>Admin Panel</h1>
+
+<input id="name" placeholder="Kaszinó neve"><br><br> <input id="bonus" placeholder="Bónusz"><br><br> <input id="link" placeholder="Link"><br><br> <input id="rating" placeholder="Rating (1-5)"><br><br>
+
+<input type="file" id="image"><br><br>
+
+<button onclick="add()">Hozzáadás</button>
+
+<h2>Lista</h2>
+<div id="list"></div>
+
+<script>
+function add() {
+    const formData = new FormData();
+
+    formData.append("name", document.getElementById("name").value);
+    formData.append("bonus", document.getElementById("bonus").value);
+    formData.append("link", document.getElementById("link").value);
+    formData.append("rating", document.getElementById("rating").value);
+
+    const file = document.getElementById("image").files[0];
+    if (file) {
+        formData.append("image", file);
+    }
+
+    fetch("/api/casinos", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(() => load())
+    .catch(err => alert("Hiba: " + err));
+}
+
+function load() {
+    fetch("/api/casinos")
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("list").innerHTML =
+            data.map(c => `
+                <div>
+                    <b>${c.name}</b><br>
+                    ${c.bonus}<br>
+                    ${c.image ? `<img src="/uploads/${c.image}" width="120">` : ""}
+                </div><hr>
+            `).join("");
+    });
+}
+
+load();
+</script>
+
+</body>
+</html>
