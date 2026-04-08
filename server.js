@@ -1,3 +1,4 @@
+```js
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const multer = require("multer");
@@ -12,8 +13,19 @@ const ADMIN_PASSWORD = "gallkrist";
 // MIDDLEWARE
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use("/uploads", express.static("uploads"));
+
+// STATIC FILES (VERY IMPORTANT)
+app.use(express.static(__dirname + "/public"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
+
+// FORCE ROUTES (FIXES YOUR BUG)
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
+app.get("/admin.html", (req, res) => {
+  res.sendFile(__dirname + "/public/admin.html");
+});
 
 // DATABASE
 const db = new sqlite3.Database("./database.db");
@@ -29,7 +41,7 @@ db.run(`
   )
 `);
 
-// FILE UPLOAD
+// FILE UPLOAD (IMPORTANT: uploads folder!)
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -55,7 +67,9 @@ app.post("/api/login", (req, res) => {
 // GET CASINOS
 app.get("/api/casinos", (req, res) => {
   db.all("SELECT * FROM casinos", [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
     res.json(rows);
   });
 });
@@ -69,13 +83,16 @@ app.post("/api/casinos", upload.single("image"), (req, res) => {
     "INSERT INTO casinos (name, bonus, link, rating, image) VALUES (?, ?, ?, ?, ?)",
     [name, bonus, link, rating, image],
     function (err) {
-      if (err) return res.status(500).json({ error: err.message });
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
       res.json({ id: this.lastID });
     }
   );
 });
 
-// START
+// START SERVER
 app.listen(PORT, () => {
   console.log("🔥 Server running on port " + PORT);
 });
+```
