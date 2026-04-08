@@ -94,4 +94,3 @@ app.post("/api/casinos", upload.single("image"), (req, res) => {
 app.listen(PORT, () => {
   console.log("🔥 Server running on port " + PORT);
 });
-```
