@@ -1,25 +1,92 @@
 <!DOCTYPE html>
-
-<html lang="hu">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin</title>
-</head>
+<title>Admin Panel</title>
 
+<style>
+body {
+    background: #0f0f0f;
+    color: white;
+    font-family: Arial;
+    padding: 30px;
+}
+
+input {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    background: lime;
+    border: none;
+    cursor: pointer;
+}
+
+.card {
+    margin-top: 20px;
+    padding: 15px;
+    background: #1c1c1c;
+    border-radius: 10px;
+}
+</style>
+
+</head>
 <body>
 
-<h1>Admin Panel</h1>
+<!-- LOGIN -->
+<div id="login">
+    <h2>Admin Login</h2>
+    <input id="pass" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+</div>
 
-<input id="name" placeholder="Kaszinó neve"><br><br> <input id="bonus" placeholder="Bónusz"><br><br> <input id="link" placeholder="Link"><br><br> <input id="rating" placeholder="Rating (1-5)"><br><br>
+<!-- PANEL -->
+<div id="panel" style="display:none;">
+    <h1>Admin Panel</h1>
 
-<input type="file" id="image"><br><br>
+    <input id="name" placeholder="Casino name">
+    <input id="bonus" placeholder="Bonus">
+    <input id="link" placeholder="Link">
+    <input id="rating" placeholder="Rating (1-5)">
+    <input type="file" id="image">
 
-<button onclick="add()">Hozzáadás</button>
+    <button onclick="add()">Add Casino</button>
 
-<h2>Lista</h2>
-<div id="list"></div>
+    <h2>List</h2>
+    <div id="list"></div>
+</div>
 
 <script>
+// LOGIN
+function login() {
+    const password = document.getElementById("pass").value;
+
+    fetch("/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ password })
+    })
+    .then(res => {
+        if (!res.ok) throw new Error();
+        return res.json();
+    })
+    .then(() => {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("panel").style.display = "block";
+        load();
+    })
+    .catch(() => {
+        alert("Wrong password!");
+    });
+}
+
+// ADD CASINO
 function add() {
     const formData = new FormData();
 
@@ -38,26 +105,30 @@ function add() {
         body: formData
     })
     .then(res => res.json())
-    .then(() => load())
-    .catch(err => alert("Hiba: " + err));
+    .then(() => {
+        load();
+    });
 }
 
+// LOAD LIST
 function load() {
     fetch("/api/casinos")
     .then(res => res.json())
     .then(data => {
-        document.getElementById("list").innerHTML =
-            data.map(c => `
-                <div>
-                    <b>${c.name}</b><br>
-                    ${c.bonus}<br>
-                    ${c.image ? `<img src="/uploads/${c.image}" width="120">` : ""}
-                </div><hr>
-            `).join("");
+        const list = document.getElementById("list");
+        list.innerHTML = "";
+
+        data.forEach(c => {
+            list.innerHTML += `
+                <div class="card">
+                    <h3>${c.name}</h3>
+                    <p>${c.bonus}</p>
+                    ${c.image ? `<img src="/uploads/${c.image}" width="100">` : ""}
+                </div>
+            `;
+        });
     });
 }
-
-load();
 </script>
 
 </body>
