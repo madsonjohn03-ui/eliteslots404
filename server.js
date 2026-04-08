@@ -14,11 +14,11 @@ const ADMIN_PASSWORD = "gallkrist";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// STATIC FILES (VERY IMPORTANT)
+// STATIC FILES
 app.use(express.static(__dirname + "/public"));
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
-// FORCE ROUTES (FIXES YOUR BUG)
+// ROUTES FIX
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
@@ -41,7 +41,7 @@ db.run(`
   )
 `);
 
-// FILE UPLOAD (IMPORTANT: uploads folder!)
+// FILE UPLOAD
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
