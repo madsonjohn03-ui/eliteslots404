@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // STATIC FILES
-app.use(express.static(__dirname + "/public"));
-app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use(express.static("public"));
+app.use("/uploads", express.static("uploads"));
 
 // ROUTES FIX
 app.get("/", (req, res) => {
