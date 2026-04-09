@@ -6,82 +6,101 @@
 
   <style>
     body {
-      background: #0b0b0b;
-      color: white;
-      font-family: Arial;
       margin: 0;
+      font-family: Arial;
+      background: #070707;
+      color: white;
     }
 
     header {
       padding: 20px;
       text-align: center;
       font-size: 28px;
-      font-weight: bold;
       color: gold;
     }
 
     .hero {
       text-align: center;
-      padding: 40px 20px;
+      padding: 40px;
     }
 
-    .hero h1 {
-      font-size: 32px;
+    .trust {
+      font-size: 18px;
+      color: #00ffcc;
+      margin-top: 10px;
     }
 
-    .list {
-      max-width: 800px;
+    .container {
+      max-width: 900px;
       margin: auto;
       padding: 20px;
     }
 
     .card {
       background: #111;
-      border: 2px solid gold;
-      border-radius: 12px;
+      border-radius: 15px;
       padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-      transition: 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
-    .card:hover {
-      transform: scale(1.02);
+    .top {
+      border: 2px solid gold;
       box-shadow: 0 0 30px gold;
     }
 
-    .card h2 {
-      margin: 0;
+    .left {
+      text-align: left;
+    }
+
+    .name {
       font-size: 22px;
+      font-weight: bold;
     }
 
     .bonus {
-      color: #00ff88;
-      margin: 10px 0;
+      color: #00ffcc;
     }
 
     .rating {
       color: gold;
-      margin-bottom: 10px;
+    }
+
+    .review {
+      font-size: 12px;
+      color: gray;
+      margin-top: 5px;
     }
 
     .btn {
-      background: gold;
+      background: linear-gradient(45deg, gold, orange);
+      padding: 12px 20px;
+      border-radius: 8px;
       color: black;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
       font-weight: bold;
-      display: inline-block;
+      text-decoration: none;
+      box-shadow: 0 0 15px gold;
+      animation: pulse 1.5s infinite;
     }
 
-    .btn:hover {
-      background: #ffd700;
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px gold; }
+      50% { box-shadow: 0 0 25px gold; }
+      100% { box-shadow: 0 0 10px gold; }
+    }
+
+    .live {
+      color: #ff4444;
+      font-size: 12px;
+      margin-top: 5px;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 30px;
       color: gray;
     }
   </style>
@@ -89,16 +108,16 @@
 
 <body>
 
-<header>🎰 EliteSlots404</header>
+<header>🔥 EliteSlots404</header>
 
 <div class="hero">
-  <h1>🔥 Best Online Casinos 2026</h1>
-  <p>Top bonuses • Trusted • Fast payouts</p>
+  <h1>Top Online Casinos 2026</h1>
+  <div class="trust">⭐ TrustScore: 9.8/10 • 12,341 Players Today</div>
 </div>
 
-<div class="list" id="list"></div>
+<div class="container" id="list"></div>
 
-<footer>© 2026 EliteSlots404</footer>
+<footer>© EliteSlots404</footer>
 
 <script>
 async function load() {
@@ -108,10 +127,14 @@ async function load() {
   const list = document.getElementById("list");
 
   list.innerHTML = data.map((c, i) => `
-    <div class="card">
-      <h2>#${i+1} ${c.name}</h2>
-      <div class="bonus">${c.bonus}</div>
-      <div class="rating">⭐ ${c.rating}</div>
+    <div class="card ${i===0 ? 'top' : ''}">
+      <div class="left">
+        <div class="name">#${i+1} ${c.name}</div>
+        <div class="bonus">${c.bonus}</div>
+        <div class="rating">⭐ ${c.rating}</div>
+        <div class="review">✔ Verified • Fast payouts • Crypto accepted</div>
+        <div class="live">🔥 ${Math.floor(Math.random()*50)+10} players playing now</div>
+      </div>
       <a class="btn" href="${c.link}" target="_blank">PLAY NOW</a>
     </div>
   `).join("");
