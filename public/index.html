@@ -2,32 +2,123 @@
 <html>
 <head>
   <title>EliteSlots404</title>
-</head>
-<body style="background:black; color:white; font-family:sans-serif; text-align:center;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <h1>🔥 Best Online Casinos 2026</h1>
-
-  <div id="list"></div>
-
-  <script>
-    async function load() {
-      const res = await fetch("/api/casinos");
-      const data = await res.json();
-
-      const list = document.getElementById("list");
-
-      list.innerHTML = data.map(c => `
-        <div style="border:1px solid gold; margin:20px; padding:20px;">
-          <h2>${c.name}</h2>
-          <p>${c.bonus}</p>
-          <p>⭐ ${c.rating}</p>
-          <a href="${c.link}" target="_blank" style="color:yellow;">PLAY NOW</a>
-        </div>
-      `).join("");
+  <style>
+    body {
+      background: #0b0b0b;
+      color: white;
+      font-family: Arial;
+      margin: 0;
     }
 
-    load();
-  </script>
+    header {
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: gold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+    }
+
+    .list {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #111;
+      border: 2px solid gold;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px gold;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .bonus {
+      color: #00ff88;
+      margin: 10px 0;
+    }
+
+    .rating {
+      color: gold;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      background: gold;
+      color: black;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: #ffd700;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: gray;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>🎰 EliteSlots404</header>
+
+<div class="hero">
+  <h1>🔥 Best Online Casinos 2026</h1>
+  <p>Top bonuses • Trusted • Fast payouts</p>
+</div>
+
+<div class="list" id="list"></div>
+
+<footer>© 2026 EliteSlots404</footer>
+
+<script>
+async function load() {
+  const res = await fetch("/api/casinos");
+  const data = await res.json();
+
+  const list = document.getElementById("list");
+
+  list.innerHTML = data.map((c, i) => `
+    <div class="card">
+      <h2>#${i+1} ${c.name}</h2>
+      <div class="bonus">${c.bonus}</div>
+      <div class="rating">⭐ ${c.rating}</div>
+      <a class="btn" href="${c.link}" target="_blank">PLAY NOW</a>
+    </div>
+  `).join("");
+}
+
+load();
+</script>
 
 </body>
 </html>
