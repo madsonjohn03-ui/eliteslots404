@@ -1,40 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
+  <title>Admin</title>
+  <style>
+    body {
+      background: #0b0b0b;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px;
+      width: 250px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: gold;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ffd700;
+    }
+  </style>
 </head>
-<body style="background:black; color:white; font-family:sans-serif; text-align:center;">
 
-  <h1>Admin Panel</h1>
+<body>
 
-  <form id="form">
-    <input name="name" placeholder="Casino name"><br><br>
-    <input name="bonus" placeholder="Bonus"><br><br>
-    <input name="link" placeholder="Link"><br><br>
-    <input name="rating" placeholder="Rating"><br><br>
-    <button>Add Casino</button>
-  </form>
+<h1>Admin Panel</h1>
 
-  <p id="status"></p>
+<form id="form">
+  <input name="name" placeholder="Casino name"><br>
+  <input name="bonus" placeholder="Bonus"><br>
+  <input name="link" placeholder="Affiliate link"><br>
+  <input name="rating" placeholder="Rating"><br>
+  <button>Add Casino</button>
+</form>
 
-  <script>
-    const form = document.getElementById("form");
-    const status = document.getElementById("status");
+<p id="status"></p>
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+<script>
+const form = document.getElementById("form");
+const status = document.getElementById("status");
 
-      const data = new FormData(form);
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      const res = await fetch("/api/casinos", {
-        method: "POST",
-        body: new URLSearchParams(data)
-      });
+  const data = new FormData(form);
 
-      status.innerText = "Added!";
-      form.reset();
-    });
-  </script>
+  await fetch("/api/casinos", {
+    method: "POST",
+    body: new URLSearchParams(data)
+  });
+
+  status.innerText = "✅ Added!";
+  form.reset();
+});
+</script>
 
 </body>
 </html>
