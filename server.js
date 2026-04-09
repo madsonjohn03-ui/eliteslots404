@@ -6,27 +6,18 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ADMIN PASSWORD
+// 🔐 ADMIN PASSWORD
 const ADMIN_PASSWORD = "gallkrist";
 
-// MIDDLEWARE
+// 🔧 MIDDLEWARE
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// STATIC FILES
+// 🔥 STATIC FILES (EZ A KULCS!)
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 
-// ROUTES FIX
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
-});
-
-app.get("/admin.html", (req, res) => {
-  res.sendFile(__dirname + "/public/admin.html");
-});
-
-// DATABASE
+// 📦 DATABASE
 const db = new sqlite3.Database("./database.db");
 
 db.run(`
@@ -40,7 +31,7 @@ db.run(`
   )
 `);
 
-// FILE UPLOAD
+// 📤 FILE UPLOAD
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -52,10 +43,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// LOGIN
+// 🔐 LOGIN
 app.post("/api/login", (req, res) => {
   const { password } = req.body;
-
   if (password === ADMIN_PASSWORD) {
     res.json({ success: true });
   } else {
@@ -63,17 +53,15 @@ app.post("/api/login", (req, res) => {
   }
 });
 
-// GET CASINOS
+// 📥 GET CASINOS
 app.get("/api/casinos", (req, res) => {
   db.all("SELECT * FROM casinos", [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
+    if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
   });
 });
 
-// ADD CASINO
+// ➕ ADD CASINO
 app.post("/api/casinos", upload.single("image"), (req, res) => {
   const { name, bonus, link, rating } = req.body;
   const image = req.file ? req.file.filename : null;
@@ -82,15 +70,13 @@ app.post("/api/casinos", upload.single("image"), (req, res) => {
     "INSERT INTO casinos (name, bonus, link, rating, image) VALUES (?, ?, ?, ?, ?)",
     [name, bonus, link, rating, image],
     function (err) {
-      if (err) {
-        return res.status(500).json({ error: err.message });
-      }
+      if (err) return res.status(500).json({ error: err.message });
       res.json({ id: this.lastID });
     }
   );
 });
 
-// START SERVER
+// 🚀 START SERVER
 app.listen(PORT, () => {
-  console.log("🔥 Server running on port " + PORT);
+  console.log("🔥 Server fut: " + PORT);
 });
