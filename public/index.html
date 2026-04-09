@@ -13,21 +13,19 @@
     }
 
     header {
-      padding: 20px;
       text-align: center;
-      font-size: 28px;
+      padding: 20px;
       color: gold;
+      font-size: 28px;
     }
 
     .hero {
       text-align: center;
-      padding: 40px;
+      padding: 30px;
     }
 
     .trust {
-      font-size: 18px;
       color: #00ffcc;
-      margin-top: 10px;
     }
 
     .container {
@@ -38,70 +36,62 @@
 
     .card {
       background: #111;
-      border-radius: 15px;
+      border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid rgba(255,255,255,0.1);
     }
 
     .top {
       border: 2px solid gold;
-      box-shadow: 0 0 30px gold;
-    }
-
-    .left {
-      text-align: left;
-    }
-
-    .name {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .bonus {
-      color: #00ffcc;
-    }
-
-    .rating {
-      color: gold;
-    }
-
-    .review {
-      font-size: 12px;
-      color: gray;
-      margin-top: 5px;
+      box-shadow: 0 0 25px gold;
     }
 
     .btn {
-      background: linear-gradient(45deg, gold, orange);
+      background: gold;
+      color: black;
       padding: 12px 20px;
       border-radius: 8px;
-      color: black;
       font-weight: bold;
       text-decoration: none;
-      box-shadow: 0 0 15px gold;
-      animation: pulse 1.5s infinite;
     }
 
-    @keyframes pulse {
-      0% { box-shadow: 0 0 10px gold; }
-      50% { box-shadow: 0 0 25px gold; }
-      100% { box-shadow: 0 0 10px gold; }
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #111;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: none;
+      box-shadow: 0 0 10px black;
     }
 
-    .live {
-      color: #ff4444;
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    footer {
+    .sticky {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: black;
       text-align: center;
-      padding: 30px;
-      color: gray;
+      padding: 15px;
+      border-top: 1px solid gold;
+    }
+
+    .sticky a {
+      background: gold;
+      padding: 12px 30px;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+
+    .timer {
+      color: red;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -111,13 +101,18 @@
 <header>🔥 EliteSlots404</header>
 
 <div class="hero">
-  <h1>Top Online Casinos 2026</h1>
-  <div class="trust">⭐ TrustScore: 9.8/10 • 12,341 Players Today</div>
+  <h1>Top Casinos 2026</h1>
+  <div class="trust">⭐ TrustScore 9.8 | 12,341 Players Today</div>
+  <div class="timer">⏳ Offer expires in: <span id="time">05:00</span></div>
 </div>
 
 <div class="container" id="list"></div>
 
-<footer>© EliteSlots404</footer>
+<div class="popup" id="popup"></div>
+
+<div class="sticky">
+  <a href="#" id="topLink" target="_blank">PLAY TOP CASINO</a>
+</div>
 
 <script>
 async function load() {
@@ -128,19 +123,49 @@ async function load() {
 
   list.innerHTML = data.map((c, i) => `
     <div class="card ${i===0 ? 'top' : ''}">
-      <div class="left">
-        <div class="name">#${i+1} ${c.name}</div>
-        <div class="bonus">${c.bonus}</div>
-        <div class="rating">⭐ ${c.rating}</div>
-        <div class="review">✔ Verified • Fast payouts • Crypto accepted</div>
-        <div class="live">🔥 ${Math.floor(Math.random()*50)+10} players playing now</div>
+      <div>
+        <h2>#${i+1} ${c.name}</h2>
+        <p>${c.bonus}</p>
+        <p>⭐ ${c.rating}</p>
       </div>
-      <a class="btn" href="${c.link}" target="_blank">PLAY NOW</a>
+      <a class="btn" href="${c.link}" target="_blank">PLAY</a>
     </div>
   `).join("");
+
+  // TOP CASINO BUTTON
+  if (data.length > 0) {
+    document.getElementById("topLink").href = data[0].link;
+  }
 }
 
 load();
+
+
+// 🔥 POPUP FAKE ACTIVITY
+const names = ["John", "Mike", "Anna", "Chris", "David"];
+function showPopup() {
+  const popup = document.getElementById("popup");
+  const name = names[Math.floor(Math.random()*names.length)];
+  const amount = Math.floor(Math.random()*5000)+500;
+
+  popup.innerText = `${name} just won $${amount}`;
+  popup.style.display = "block";
+
+  setTimeout(() => popup.style.display = "none", 3000);
+}
+
+setInterval(showPopup, 5000);
+
+
+// ⏳ COUNTDOWN
+let time = 300;
+setInterval(() => {
+  time--;
+  const min = Math.floor(time/60);
+  const sec = time%60;
+  document.getElementById("time").innerText =
+    `${min}:${sec<10?'0':''}${sec}`;
+}, 1000);
 </script>
 
 </body>
