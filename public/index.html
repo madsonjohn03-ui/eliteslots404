@@ -1,247 +1,33 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EliteSlots404</title>
-
-<style>
-body {
-    margin:0;
-    font-family: Arial;
-    background:#0a0a0a;
-    color:white;
-}
-
-/* HEADER */
-header {
-    padding:20px;
-    background:#111;
-    text-align:center;
-}
-
-.logo {
-    font-size:26px;
-    font-weight:bold;
-    background: linear-gradient(45deg, gold, orange);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* HERO */
-.hero {
-    text-align:center;
-    padding:60px 20px;
-}
-
-.hero h1 {
-    font-size:38px;
-}
-
-.hero p {
-    color:#aaa;
-}
-
-/* TRUST BAR */
-.trustbar {
-    text-align:center;
-    padding:12px;
-    background:#111;
-    color:#00ff88;
-}
-
-/* TOP */
-.top {
-    max-width:900px;
-    margin:20px auto;
-    background:#1a1a1a;
-    border:2px solid gold;
-    border-radius:14px;
-    padding:25px;
-    box-shadow:0 0 25px rgba(255,215,0,0.2);
-}
-
-.top img {
-    width:120px;
-}
-
-.badge {
-    background:gold;
-    color:black;
-    padding:6px 12px;
-    border-radius:6px;
-    font-size:12px;
-    display:inline-block;
-    margin-bottom:10px;
-}
-
-.top .row {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.left {
-    display:flex;
-    gap:20px;
-    align-items:center;
-}
-
-.trust {
-    color:#00ff88;
-    font-size:13px;
-}
-
-.review {
-    color:#aaa;
-    font-size:14px;
-    margin-top:10px;
-}
-
-/* BUTTON */
-.btn {
-    background:linear-gradient(45deg,gold,orange);
-    color:black;
-    padding:14px 22px;
-    border-radius:10px;
-    text-decoration:none;
-    font-weight:bold;
-    box-shadow:0 0 15px gold;
-    transition:0.2s;
-}
-
-.btn:hover {
-    transform:scale(1.1);
-}
-
-/* LIST */
-.container {
-    max-width:900px;
-    margin:auto;
-    padding:20px;
-}
-
-.card {
-    background:#1a1a1a;
-    margin-bottom:15px;
-    padding:18px;
-    border-radius:12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    transition:0.2s;
-}
-
-.card:hover {
-    transform:scale(1.02);
-}
-
-.rank {
-    font-size:20px;
-    font-weight:bold;
-    color:gold;
-    margin-right:10px;
-}
-
-.card img {
-    width:80px;
-    border-radius:8px;
-}
-
-.bonus {
-    color:#00ff88;
-}
-
-/* FOOTER */
-footer {
-    text-align:center;
-    padding:20px;
-    color:#666;
-}
-</style>
-
+  <title>EliteSlots404</title>
 </head>
+<body style="background:black; color:white; font-family:sans-serif; text-align:center;">
 
-<body>
+  <h1>🔥 Best Online Casinos 2026</h1>
 
-<header>
-    <div class="logo">🎰 EliteSlots404</div>
-</header>
+  <div id="list"></div>
 
-<div class="hero">
-    <h1>🔥 Best Online Casinos 2026</h1>
-    <p>Top bonuses • Trusted platforms • Fast withdrawals</p>
-</div>
+  <script>
+    async function load() {
+      const res = await fetch("/api/casinos");
+      const data = await res.json();
 
-<div class="trustbar">
-    ✔ Licensed Casinos • ✔ Fast Payouts • ✔ 100% Secure
-</div>
+      const list = document.getElementById("list");
 
-<div id="top"></div>
+      list.innerHTML = data.map(c => `
+        <div style="border:1px solid gold; margin:20px; padding:20px;">
+          <h2>${c.name}</h2>
+          <p>${c.bonus}</p>
+          <p>⭐ ${c.rating}</p>
+          <a href="${c.link}" target="_blank" style="color:yellow;">PLAY NOW</a>
+        </div>
+      `).join("");
+    }
 
-<div class="container" id="list"></div>
-
-<footer>
-    © 2026 EliteSlots404
-</footer>
-
-<script>
-function load() {
-    fetch("/api/casinos")
-    .then(res => res.json())
-    .then(data => {
-
-        if (data.length === 0) return;
-
-        const top = data[0];
-
-        document.getElementById("top").innerHTML = `
-            <div class="top">
-
-                <div class="badge">🔥 #1 ELITE PICK</div>
-
-                <div class="row">
-                    <div class="left">
-                        ${top.image ? `<img src="/uploads/${top.image}">` : ""}
-                        <div>
-                            <h2>${top.name}</h2>
-                            <div class="bonus">${top.bonus}</div>
-                            <div>${"⭐".repeat(top.rating || 0)}</div>
-                            <div class="trust">✔ Trusted • ✔ Fast Payout • ✔ Licensed</div>
-                        </div>
-                    </div>
-
-                    <a class="btn" href="${top.link}" target="_blank">PLAY NOW</a>
-                </div>
-
-                <div class="review">
-                    "EliteSlots404 recommends this casino for high RTP, fast payouts and premium bonuses."
-                </div>
-
-            </div>
-        `;
-
-        document.getElementById("list").innerHTML =
-            data.slice(1).map((c, i) => `
-                <div class="card">
-                    <div class="left">
-                        <div class="rank">#${i+2}</div>
-                        ${c.image ? `<img src="/uploads/${c.image}">` : ""}
-                        <div>
-                            <h3>${c.name}</h3>
-                            <div class="bonus">${c.bonus}</div>
-                        </div>
-                    </div>
-                    <a class="btn" href="${c.link}" target="_blank">PLAY</a>
-                </div>
-            `).join("");
-
-    });
-}
-
-load();
-</script>
+    load();
+  </script>
 
 </body>
 </html>
