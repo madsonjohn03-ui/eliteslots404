@@ -21,8 +21,8 @@ db.run(`
 `);
 
 app.get("/api/casinos", (req, res) => {
-  db.all("SELECT * FROM casinos", [], (err, rows) => {
-    if (err) return res.send(err);
+  db.all("SELECT * FROM casinos ORDER BY id DESC", [], (err, rows) => {
+    if (err) return res.status(500).send(err.message);
     res.json(rows);
   });
 });
@@ -34,8 +34,8 @@ app.post("/api/casinos", (req, res) => {
     "INSERT INTO casinos (name, bonus, link, rating) VALUES (?, ?, ?, ?)",
     [name, bonus, link, rating],
     function (err) {
-      if (err) return res.send(err);
-      res.json({ ok: true });
+      if (err) return res.status(500).send(err.message);
+      res.json({ success: true, id: this.lastID });
     }
   );
 });
@@ -44,12 +44,11 @@ app.delete("/api/casinos/:id", (req, res) => {
   const id = req.params.id;
 
   db.run("DELETE FROM casinos WHERE id = ?", [id], function (err) {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-
+    if (err) return res.status(500).send(err.message);
     res.json({ success: true });
   });
 });
 
-app.listen(PORT, () => console.log("RUNNING"));
+app.listen(PORT, () => {
+  console.log("RUNNING ON PORT " + PORT);
+});
