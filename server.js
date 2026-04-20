@@ -53,6 +53,29 @@ app.post("/api/casinos", async (req, res) => {
   res.json({ success: true, data });
 });
 
+// UPDATE casino
+app.put("/api/casinos/:id", async (req, res) => {
+  const id = req.params.id;
+  const { name, bonus, link, rating } = req.body;
+
+  const { data, error } = await supabase
+    .from("casinos")
+    .update({
+      name,
+      bonus,
+      link,
+      rating: Number(rating)
+    })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.json({ success: true, data });
+});
+
 // DELETE casino
 app.delete("/api/casinos/:id", async (req, res) => {
   const id = req.params.id;
