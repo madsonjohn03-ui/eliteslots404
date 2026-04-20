@@ -6,20 +6,20 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static("public"));
 
 const db = new sqlite3.Database("./database.db");
 
-db.run(`CREATE TABLE IF NOT EXISTS casinos (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT,
-  bonus TEXT,
-  link TEXT,
-  rating INTEGER
-)`);
+db.run(`
+  CREATE TABLE IF NOT EXISTS casinos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    bonus TEXT,
+    link TEXT,
+    rating INTEGER
+  )
+`);
 
-// GET
 app.get("/api/casinos", (req, res) => {
   db.all("SELECT * FROM casinos", [], (err, rows) => {
     if (err) return res.send(err);
@@ -27,7 +27,6 @@ app.get("/api/casinos", (req, res) => {
   });
 });
 
-// ADD
 app.post("/api/casinos", (req, res) => {
   const { name, bonus, link, rating } = req.body;
 
@@ -39,6 +38,18 @@ app.post("/api/casinos", (req, res) => {
       res.json({ ok: true });
     }
   );
+});
+
+app.delete("/api/casinos/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.run("DELETE FROM casinos WHERE id = ?", [id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    res.json({ success: true });
+  });
 });
 
 app.listen(PORT, () => console.log("RUNNING"));
