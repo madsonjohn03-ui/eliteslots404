@@ -1,70 +1,160 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin</title>
+  <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background: #0b0b0b;
       color: white;
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       text-align: center;
+      margin: 0;
+      padding: 30px 15px;
+    }
+
+    h1, h2 {
+      color: gold;
+    }
+
+    form {
+      margin-bottom: 30px;
     }
 
     input {
-      padding: 10px;
-      margin: 5px;
-      width: 250px;
-      border-radius: 6px;
+      padding: 12px;
+      margin: 6px 0;
+      width: 280px;
+      max-width: 90%;
+      border-radius: 8px;
       border: none;
+      outline: none;
     }
 
     button {
-      padding: 10px 20px;
-      background: gold;
+      padding: 12px 18px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
+      margin-top: 8px;
     }
 
-    button:hover {
-      background: #ffd700;
+    .add-btn {
+      background: gold;
+      color: black;
+    }
+
+    .delete-btn {
+      background: #ff4d4f;
+      color: white;
+      margin-left: 10px;
+    }
+
+    .casino-list {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .casino-item {
+      background: #151515;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .casino-info h3 {
+      margin: 0 0 6px 0;
+      color: white;
+    }
+
+    .casino-info p {
+      margin: 4px 0;
+      color: #bdbdbd;
+    }
+
+    .status {
+      margin-top: 10px;
+      color: #00ff99;
     }
   </style>
 </head>
-
 <body>
 
-<h1>Admin Panel</h1>
+  <h1>Admin Panel</h1>
 
-<form id="form">
-  <input name="name" placeholder="Casino name"><br>
-  <input name="bonus" placeholder="Bonus"><br>
-  <input name="link" placeholder="Affiliate link"><br>
-  <input name="rating" placeholder="Rating"><br>
-  <button>Add Casino</button>
-</form>
+  <form id="form">
+    <input name="name" placeholder="Casino name" required><br>
+    <input name="bonus" placeholder="Bonus" required><br>
+    <input name="link" placeholder="Link" required><br>
+    <input name="rating" placeholder="Rating" required><br>
+    <button class="add-btn" type="submit">Add Casino</button>
+  </form>
 
-<p id="status"></p>
+  <p id="status" class="status"></p>
 
-<script>
-const form = document.getElementById("form");
-const status = document.getElementById("status");
+  <h2>Casino List</h2>
+  <div id="list" class="casino-list"></div>
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  <script>
+    const form = document.getElementById("form");
+    const status = document.getElementById("status");
+    const list = document.getElementById("list");
 
-  const data = new FormData(form);
+    async function loadCasinos() {
+      const res = await fetch("/api/casinos");
+      const data = await res.json();
 
-  await fetch("/api/casinos", {
-    method: "POST",
-    body: new URLSearchParams(data)
-  });
+      list.innerHTML = data.map(c => `
+        <div class="casino-item">
+          <div class="casino-info">
+            <h3>${c.name}</h3>
+            <p><strong>Bonus:</strong> ${c.bonus}</p>
+            <p><strong>Rating:</strong> ⭐ ${c.rating}</p>
+            <p><strong>Link:</strong> ${c.link}</p>
+          </div>
+          <div>
+            <button class="delete-btn" onclick="deleteCasino(${c.id})">Delete</button>
+          </div>
+        </div>
+      `).join("");
+    }
 
-  status.innerText = "✅ Added!";
-  form.reset();
-});
-</script>
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+
+      await fetch("/api/casinos", {
+        method: "POST",
+        body: new URLSearchParams(data)
+      });
+
+      status.innerText = "Casino added successfully.";
+      form.reset();
+      loadCasinos();
+    });
+
+    async function deleteCasino(id) {
+      const ok = confirm("Are you sure you want to delete this casino?");
+      if (!ok) return;
+
+      await fetch("/api/casinos/" + id, {
+        method: "DELETE"
+      });
+
+      status.innerText = "Casino deleted.";
+      loadCasinos();
+    }
+
+    loadCasinos();
+  </script>
 
 </body>
 </html>
