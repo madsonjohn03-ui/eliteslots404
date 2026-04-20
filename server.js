@@ -1,5 +1,6 @@
 const express = require("express");
 const { createClient } = require("@supabase/supabase-js");
+const fetch = require("node-fetch");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,8 +12,11 @@ app.use(express.static("public"));
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  global: { fetch }
+});
 
+// GET casinos
 app.get("/api/casinos", async (req, res) => {
   const { data, error } = await supabase
     .from("casinos")
@@ -26,6 +30,7 @@ app.get("/api/casinos", async (req, res) => {
   res.json(data);
 });
 
+// ADD casino
 app.post("/api/casinos", async (req, res) => {
   const { name, bonus, link, rating } = req.body;
 
@@ -48,6 +53,7 @@ app.post("/api/casinos", async (req, res) => {
   res.json({ success: true, data });
 });
 
+// DELETE casino
 app.delete("/api/casinos/:id", async (req, res) => {
   const id = req.params.id;
 
