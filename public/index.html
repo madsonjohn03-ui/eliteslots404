@@ -16,787 +16,154 @@
       --gold: #f6c453;
       --gold-2: #ff9f1a;
       --green: #15d68c;
-      --red: #ff5a6b;
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-      --radius: 20px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
+      font-family: Arial, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(246, 196, 83, 0.12), transparent 28%),
-        radial-gradient(circle at top right, rgba(21, 214, 140, 0.09), transparent 22%),
-        linear-gradient(180deg, #060910 0%, #0a101a 40%, #070b14 100%);
+        radial-gradient(circle at top left, rgba(246,196,83,0.12), transparent 28%),
+        linear-gradient(180deg, #060910, #070b14);
       color: var(--text);
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
     .shell {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
+      width: min(1100px, calc(100% - 20px));
+      margin: auto;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(16px);
-      background: rgba(7, 11, 20, 0.7);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .topbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      min-height: 76px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      font-size: 22px;
-    }
-
-    .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--gold), var(--gold-2));
-      color: #151515;
-      box-shadow: 0 12px 28px rgba(246, 196, 83, 0.28);
-      font-size: 20px;
-    }
-
-    .brand-name {
-      background: linear-gradient(90deg, #fff, #f6c453);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .nav a {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .nav a:hover {
-      color: #fff;
-    }
-
-    .nav-cta {
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-2));
-      color: #111;
-      font-weight: 800;
-      box-shadow: 0 12px 28px rgba(246, 196, 83, 0.25);
+    header {
+      text-align: center;
+      padding: 20px;
+      font-size: 26px;
+      color: gold;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
     .hero {
-      padding: 52px 0 28px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-copy {
-      padding: 18px 0;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(21, 214, 140, 0.08);
-      border: 1px solid rgba(21, 214, 140, 0.18);
-      color: #dffdf2;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 16px;
+      text-align: center;
+      padding: 40px 20px;
     }
 
     .hero h1 {
-      margin: 0 0 14px;
-      font-size: clamp(38px, 6vw, 64px);
-      line-height: 1.02;
-      letter-spacing: -1.6px;
+      font-size: 36px;
     }
 
-    .hero h1 span {
-      background: linear-gradient(90deg, #ffffff, var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      margin: 0;
-      max-width: 640px;
-      font-size: 18px;
-      line-height: 1.7;
-      color: var(--muted);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 14px;
-      font-weight: 800;
-      transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--gold), var(--gold-2));
-      color: #141414;
-      box-shadow: 0 18px 38px rgba(246, 196, 83, 0.22);
-    }
-
-    .btn-secondary {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.04);
-      color: #fff;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 28px;
-    }
-
-    .stat {
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: var(--shadow);
-    }
-
-    .stat-number {
-      font-size: 24px;
-      font-weight: 900;
-      color: #fff;
-    }
-
-    .stat-label {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .hero-side {
-      position: relative;
-      min-height: 100%;
-    }
-
-    .featured-panel {
-      position: relative;
-      height: 100%;
-      border-radius: 28px;
-      padding: 24px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
-        linear-gradient(135deg, rgba(246,196,83,0.16), rgba(255,159,26,0.06) 50%, rgba(21,214,140,0.08));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .featured-panel::after {
-      content: "";
-      position: absolute;
-      inset: auto -40px -40px auto;
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(246,196,83,0.34), transparent 68%);
-      pointer-events: none;
-    }
-
-    .panel-badge {
-      display: inline-flex;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(246, 196, 83, 0.18);
-      border: 1px solid rgba(246, 196, 83, 0.24);
-      color: #fff0c8;
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
-    .panel-title {
-      font-size: 28px;
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
-
-    .panel-copy {
-      color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 20px;
-    }
-
-    .panel-boxes {
-      display: grid;
-      gap: 12px;
-    }
-
-    .panel-box {
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(0, 0, 0, 0.22);
-      border: 1px solid rgba(255,255,255,0.05);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 14px;
-    }
-
-    .panel-box strong {
-      color: #fff;
-    }
-
-    .trust-strip {
-      margin-top: 12px;
-      margin-bottom: 18px;
-    }
-
-    .trust-inner {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .trust-pill {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: #d7ffe9;
-      background: rgba(21, 214, 140, 0.08);
-      border: 1px solid rgba(21, 214, 140, 0.18);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-top: 28px;
-      margin-bottom: 18px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: 30px;
-      letter-spacing: -0.5px;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: var(--muted);
+    .trust {
+      color: #00ffcc;
+      margin-top: 10px;
     }
 
     .cards {
-      display: grid;
-      gap: 18px;
+      padding: 20px;
     }
 
     .casino-card {
-      position: relative;
-      display: grid;
-      grid-template-columns: 92px 1.2fr 0.9fr 180px;
-      gap: 18px;
-      align-items: center;
-      padding: 22px;
-      border-radius: 22px;
       background: var(--card);
       border: 1px solid var(--card-border);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .casino-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(246, 196, 83, 0.26);
-      box-shadow: 0 20px 64px rgba(0, 0, 0, 0.5);
-    }
-
-    .rank-box {
-      width: 92px;
-      height: 92px;
-      border-radius: 22px;
-      display: grid;
-      place-items: center;
-      background:
-        linear-gradient(135deg, rgba(246,196,83,0.24), rgba(255,159,26,0.1)),
-        rgba(255,255,255,0.04);
-      border: 1px solid rgba(246,196,83,0.2);
-    }
-
-    .rank-box span {
-      font-size: 32px;
-      font-weight: 900;
-      color: var(--gold);
-    }
-
-    .casino-main h3 {
-      margin: 0 0 8px;
-      font-size: 24px;
-      letter-spacing: -0.4px;
-    }
-
-    .casino-main p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .offer-wrap {
-      display: grid;
-      gap: 10px;
-      justify-items: start;
-    }
-
-    .offer-tag {
-      display: inline-flex;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(21, 214, 140, 0.09);
-      border: 1px solid rgba(21, 214, 140, 0.18);
-      color: #d9fff0;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .offer-text {
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--green);
-      line-height: 1.25;
-    }
-
-    .meta-line {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .meta-chip {
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .cta-box {
-      justify-self: stretch;
-      display: grid;
-      gap: 10px;
-      justify-items: stretch;
-    }
-
-    .score {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
       border-radius: 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .score strong {
-      font-size: 22px;
-      color: #fff;
-    }
-
-    .cta-box .btn {
-      width: 100%;
-    }
-
-    .cta-note {
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .featured {
-      border-color: rgba(246, 196, 83, 0.24);
-      background:
-        linear-gradient(180deg, rgba(246,196,83,0.07), rgba(255,255,255,0.04)),
-        var(--card);
+      border: 2px solid gold;
+      box-shadow: 0 0 20px gold;
     }
 
-    .featured-ribbon {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-2));
-      color: #111;
-      font-size: 12px;
-      font-weight: 900;
-      box-shadow: 0 14px 32px rgba(246,196,83,0.22);
-    }
-
-    .social-proof {
-      margin-top: 28px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .proof-card {
-      padding: 20px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      box-shadow: var(--shadow);
-    }
-
-    .proof-card strong {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
-
-    .proof-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.65;
+    .btn {
+      background: linear-gradient(45deg, var(--gold), var(--gold-2));
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
     }
 
     .footer {
-      margin-top: 46px;
-      padding: 28px 0 40px;
-      color: #7b8599;
+      margin-top: 40px;
+      padding: 30px 20px;
       text-align: center;
-      font-size: 14px;
-    }
-
-    @media (max-width: 980px) {
-      .hero-grid,
-      .social-proof {
-        grid-template-columns: 1fr;
-      }
-
-      .casino-card {
-        grid-template-columns: 80px 1fr;
-      }
-
-      .offer-wrap,
-      .cta-box {
-        grid-column: 2 / -1;
-      }
-
-      .featured-ribbon {
-        position: static;
-        width: fit-content;
-        margin-bottom: 12px;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .shell {
-        width: min(100% - 20px, 1180px);
-      }
-
-      .topbar-inner {
-        min-height: 68px;
-      }
-
-      .nav a:not(.nav-cta) {
-        display: none;
-      }
-
-      .hero {
-        padding: 34px 0 18px;
-      }
-
-      .hero h1 {
-        letter-spacing: -1px;
-      }
-
-      .hero-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .casino-card {
-        grid-template-columns: 1fr;
-        padding-top: 18px;
-      }
-
-      .rank-box {
-        width: 72px;
-        height: 72px;
-      }
-
-      .offer-wrap,
-      .cta-box {
-        grid-column: auto;
-      }
-
-      .section-head {
-        align-items: start;
-        flex-direction: column;
-      }
+      color: #7b8599;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
   </style>
 </head>
-<body>
-  <div class="topbar">
-    <div class="shell topbar-inner">
-      <div class="brand">
-        <div class="brand-mark">E</div>
-        <div class="brand-name">EliteSlots404</div>
-      </div>
 
-      <div class="nav">
-        <a href="#top-rated">Top Rated</a>
-        <a href="#why-us">Why Us</a>
-        <a class="nav-cta" href="#top-rated">Play Now</a>
-      </div>
-    </div>
+<body>
+
+<header>🎰 EliteSlots404</header>
+
+<div class="hero">
+  <h1>Top Online Casinos 2026</h1>
+  <div class="trust">⭐ TrustScore 9.8 | 12,341 Players Today</div>
+</div>
+
+<div class="shell cards" id="list"></div>
+
+<div class="footer">
+
+  <div style="margin-bottom:18px; font-size:14px; color:#a7b0c3;">
+    ⚠️ Gambling can be addictive. Play responsibly.
   </div>
 
-  <section class="hero">
-    <div class="shell hero-grid">
-      <div class="hero-copy">
-        <div class="eyebrow">🔥 Trusted picks • Fast payouts • Exclusive bonuses</div>
-        <h1>Play smarter with <span>top casino offers</span> that actually convert.</h1>
-        <p>
-          Compare the best online casinos in one premium list. We highlight stronger bonuses,
-          faster withdrawals, and higher-rated platforms so visitors find the right casino faster.
-        </p>
+  <div style="display:flex; justify-content:center; gap:12px; margin-bottom:15px; flex-wrap:wrap;">
 
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#top-rated">See Top Casinos</a>
-          <a class="btn btn-secondary" href="#why-us">Why Choose Us</a>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat">
-            <div class="stat-number">9.8/10</div>
-            <div class="stat-label">Average trust score</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">24h</div>
-            <div class="stat-label">Fast payout focus</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">2026</div>
-            <div class="stat-label">Updated picks</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-side">
-        <div class="featured-panel">
-          <div class="panel-badge">EDITOR'S PICK</div>
-          <div class="panel-title">Premium casino comparison page</div>
-          <div class="panel-copy">
-            Built to feel sharper, cleaner, and more premium — with strong CTAs, trust cues,
-            and a featured top pick above the rest.
-          </div>
-
-          <div class="panel-boxes">
-            <div class="panel-box">
-              <span>Conversion-focused layout</span>
-              <strong>Enabled</strong>
-            </div>
-            <div class="panel-box">
-              <span>Top offer visibility</span>
-              <strong>High</strong>
-            </div>
-            <div class="panel-box">
-              <span>Affiliate-ready design</span>
-              <strong>Yes</strong>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div style="
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: bold;
+      color: white;
+    ">
+      18+
     </div>
 
-    <div class="shell trust-strip">
-      <div class="trust-inner">
-        <div class="trust-pill">✔ Secure payment brands</div>
-        <div class="trust-pill">✔ Fast withdrawal focus</div>
-        <div class="trust-pill">✔ Verified offer styling</div>
-        <div class="trust-pill">✔ Mobile-first layout</div>
-      </div>
-    </div>
-  </section>
+    <a href="https://www.begambleaware.org" target="_blank" style="color: gold;">
+      BeGambleAware.org
+    </a>
 
-  <main class="shell">
-    <div class="section-head" id="top-rated">
+  </div>
+
+  <a href="https://www.begambleaware.org" target="_blank">
+    <img src="https://www.begambleaware.org/wp-content/themes/begambleaware/assets/img/logo.svg"
+         style="height:32px; opacity:0.8;">
+  </a>
+
+  <div style="margin-top:20px; font-size:12px;">
+    © 2026 EliteSlots404 — All rights reserved.
+  </div>
+
+</div>
+
+<script>
+async function load() {
+  const res = await fetch("/api/casinos");
+  const data = await res.json();
+
+  const list = document.getElementById("list");
+
+  list.innerHTML = data.map((c, i) => `
+    <div class="casino-card ${i===0 ? 'featured' : ''}">
       <div>
-        <h2>Top rated casinos</h2>
-        <p>Clean ranking layout inspired by premium gambling landing pages.</p>
+        <h2>#${i+1} ${c.name}</h2>
+        <p>${c.bonus}</p>
+        <p>⭐ ${c.rating}</p>
       </div>
+      <a class="btn" href="${c.link}" target="_blank">PLAY NOW</a>
     </div>
+  `).join("");
+}
 
-    <div class="cards" id="list"></div>
+load();
+</script>
 
-    <div class="section-head" id="why-us">
-      <div>
-        <h2>Why users click here first</h2>
-        <p>Trust, speed, and clean decision-making.</p>
-      </div>
-    </div>
-
-    <div class="social-proof">
-      <div class="proof-card">
-        <strong>Better first impression</strong>
-        <p>A darker, luxury-style UI makes the page look more serious and more premium.</p>
-      </div>
-      <div class="proof-card">
-        <strong>Clearer call-to-action</strong>
-        <p>Strong, visible buttons reduce hesitation and move users faster to your offer pages.</p>
-      </div>
-      <div class="proof-card">
-        <strong>Focused rankings</strong>
-        <p>Visitors instantly understand what is top-rated, what bonus is offered, and where to click.</p>
-      </div>
-    </div>
-
-    <div class="footer">
-      © 2026 EliteSlots404 — Premium casino picks, cleaner rankings, faster decisions.
-    </div>
-  </main>
-
-  <script>
-    function trustScore(rating) {
-      const base = 8.7;
-      const score = Math.min(9.9, base + (Number(rating || 0) * 0.2));
-      return score.toFixed(1);
-    }
-
-    async function load() {
-      const res = await fetch("/api/casinos");
-      const data = await res.json();
-      const list = document.getElementById("list");
-
-      if (!Array.isArray(data) || data.length === 0) {
-        list.innerHTML = `
-          <div class="casino-card featured">
-            <div class="rank-box"><span>#1</span></div>
-            <div class="casino-main">
-              <h3>No casinos added yet</h3>
-              <p>Add your first casino from the admin panel and it will appear here automatically.</p>
-            </div>
-            <div class="offer-wrap">
-              <div class="offer-tag">START HERE</div>
-              <div class="offer-text">Add your first offer</div>
-              <div class="meta-line">
-                <div class="meta-chip">Admin ready</div>
-                <div class="meta-chip">Live sync</div>
-              </div>
-            </div>
-            <div class="cta-box">
-              <div class="score"><span>Trust score</span><strong>9.0</strong></div>
-              <a class="btn btn-primary" href="#top-rated">No Offers Yet</a>
-              <div class="cta-note">Waiting for content</div>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      list.innerHTML = data.map((c, i) => `
-        <article class="casino-card ${i === 0 ? "featured" : ""}">
-          ${i === 0 ? `<div class="featured-ribbon">TOP PICK</div>` : ""}
-
-          <div class="rank-box">
-            <span>#${i + 1}</span>
-          </div>
-
-          <div class="casino-main">
-            <h3>${c.name}</h3>
-            <p>${i === 0
-              ? "Strongest highlighted offer on the page with maximum visual focus."
-              : "A competitive option with a clear offer and quick access to the main CTA."}</p>
-          </div>
-
-          <div class="offer-wrap">
-            <div class="offer-tag">${i === 0 ? "BEST BONUS" : "HOT OFFER"}</div>
-            <div class="offer-text">${c.bonus}</div>
-            <div class="meta-line">
-              <div class="meta-chip">⭐ ${c.rating}</div>
-              <div class="meta-chip">Fast Withdrawals</div>
-              <div class="meta-chip">Trusted Brand</div>
-            </div>
-          </div>
-
-          <div class="cta-box">
-            <div class="score">
-              <span>Trust score</span>
-              <strong>${trustScore(c.rating)}</strong>
-            </div>
-            <a class="btn btn-primary" href="${c.link}" target="_blank" rel="noopener noreferrer">Play Now</a>
-            <div class="cta-note">Exclusive access offer</div>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    load();
-  </script>
 </body>
 </html>
