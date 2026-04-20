@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       background: #0b0b0b;
@@ -77,6 +79,7 @@
     .casino-info p {
       margin: 4px 0;
       color: #bdbdbd;
+      word-break: break-word;
     }
 
     .status {
@@ -131,10 +134,15 @@
 
       const data = new FormData(form);
 
-      await fetch("/api/casinos", {
+      const res = await fetch("/api/casinos", {
         method: "POST",
         body: new URLSearchParams(data)
       });
+
+      if (!res.ok) {
+        status.innerText = "Save failed.";
+        return;
+      }
 
       status.innerText = "Casino added successfully.";
       form.reset();
@@ -145,9 +153,14 @@
       const ok = confirm("Are you sure you want to delete this casino?");
       if (!ok) return;
 
-      await fetch("/api/casinos/" + id, {
+      const res = await fetch("/api/casinos/" + id, {
         method: "DELETE"
       });
+
+      if (!res.ok) {
+        status.innerText = "Delete failed.";
+        return;
+      }
 
       status.innerText = "Casino deleted.";
       loadCasinos();
