@@ -1,72 +1,71 @@
 const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
+const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// Database
-const db = new sqlite3.Database("./database.db");
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
-// Table
-db.run(`
-  CREATE TABLE IF NOT EXISTS casinos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    bonus TEXT,
-    link TEXT,
-    rating INTEGER
-  )
-`);
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Get all casinos
-app.get("/api/casinos", (req, res) => {
-  db.all("SELECT * FROM casinos ORDER BY id DESC", [], (err, rows) => {
-    if (err) {
-      return res.status(500).send(err.message);
-    }
-    res.json(rows);
-  });
+// GET casinos
+app.get("/api/casinos", async (req, res) => {
+  const { data, error } = await supabase
+    .from("casinos")
+    .select("*")
+    .order("id", { ascending: false });
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.json(data);
 });
 
-// Add casino
-app.post("/api/casinos", (req, res) => {
+// ADD casino
+app.post("/api/casinos", async (req, res) => {
   const { name, bonus, link, rating } = req.body;
 
-  db.run(
-    "INSERT INTO casinos (name, bonus, link, rating) VALUES (?, ?, ?, ?)",
-    [name, bonus, link, rating],
-    function (err) {
-      if (err) {
-        return res.status(500).send(err.message);
+  const { data, error } = await supabase
+    .from("casinos")
+    .insert([
+      {
+        name,
+        bonus,
+        link,
+        rating: Number(rating)
       }
+    ])
+    .select();
 
-      res.json({
-        success: true,
-        id: this.lastID
-      });
-    }
-  );
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.json({ success: true, data });
 });
 
-// Delete casino
-app.delete("/api/casinos/:id", (req, res) => {
+// DELETE casino
+app.delete("/api/casinos/:id", async (req, res) => {
   const id = req.params.id;
 
-  db.run("DELETE FROM casinos WHERE id = ?", [id], function (err) {
-    if (err) {
-      return res.status(500).send(err.message);
-    }
+  const { error } = await supabase
+    .from("casinos")
+    .delete()
+    .eq("id", id);
 
-    res.json({ success: true });
-  });
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.json({ success: true });
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log("RUNNING ON PORT " + PORT);
 });
