@@ -525,10 +525,52 @@
 
     .footer {
       margin-top: 46px;
-      padding: 28px 0 40px;
+      padding: 28px 0 110px;
       color: #7b8599;
       text-align: center;
       font-size: 14px;
+    }
+
+    .sticky-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 11, 20, 0.92);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.35);
+    }
+
+    .sticky-inner {
+      width: min(1180px, calc(100% - 20px));
+      min-height: 74px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+    }
+
+    .sticky-copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .sticky-copy strong {
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .sticky-copy span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .sticky-btn {
+      white-space: nowrap;
     }
 
     @media (max-width: 980px) {
@@ -596,6 +638,16 @@
       .section-head {
         align-items: start;
         flex-direction: column;
+      }
+
+      .sticky-inner {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px 0 14px;
+      }
+
+      .sticky-btn {
+        width: 100%;
       }
     }
   </style>
@@ -717,9 +769,86 @@
     </div>
 
     <div class="footer">
-      © 2026 EliteSlots404 — Premium casino picks, cleaner rankings, faster decisions.
+      <div style="margin-bottom:18px; font-size:14px; color:#a7b0c3;">
+        ⚠️ Gambling can be addictive. Play responsibly.
+      </div>
+
+      <div style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:14px;
+        flex-wrap:wrap;
+        margin-bottom:15px;
+      ">
+        <div style="
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          padding: 6px 14px;
+          border-radius: 999px;
+          font-weight: 800;
+          color: white;
+          font-size: 13px;
+        ">
+          18+
+        </div>
+
+        <a href="https://www.begambleaware.org" target="_blank" style="
+          color: var(--gold);
+          font-weight: 600;
+        ">
+          BeGambleAware.org
+        </a>
+      </div>
+
+      <a href="https://www.begambleaware.org" target="_blank">
+        <img
+          src="https://www.begambleaware.org/wp-content/themes/begambleaware/assets/img/logo.svg"
+          style="
+            height:32px;
+            opacity:0.8;
+            filter: brightness(0.9);
+          "
+        >
+      </a>
+
+      <div style="margin-top:20px; opacity:0.85;">
+        <span style="margin: 0 6px;">💳 Visa</span>
+        <span style="margin: 0 6px;">💳 Mastercard</span>
+        <span style="margin: 0 6px;">₿ Bitcoin</span>
+        <span style="margin: 0 6px;">🪙 Crypto</span>
+      </div>
+
+      <div style="
+        margin-top:18px;
+        font-size:11px;
+        color:#5f6a7d;
+        max-width:700px;
+        margin-left:auto;
+        margin-right:auto;
+        line-height:1.6;
+      ">
+        This website is intended for users aged 18 and over. Gambling may be restricted or illegal in some jurisdictions.
+        Users are responsible for ensuring compliance with local laws before participating in any gambling activities.
+      </div>
+
+      <div style="margin-top:20px; font-size:12px; color:#7b8599;">
+        © 2026 EliteSlots404 — All rights reserved.
+      </div>
     </div>
   </main>
+
+  <div class="sticky-bar">
+    <div class="sticky-inner">
+      <div class="sticky-copy">
+        <strong>Ready to claim the top offer?</strong>
+        <span>Open the highest-ranked casino on this page.</span>
+      </div>
+      <a id="topCasinoBtn" class="btn btn-primary sticky-btn" href="#" target="_blank" rel="noopener noreferrer">
+        🔥 Play Top Casino
+      </a>
+    </div>
+  </div>
 
   <script>
     function trustScore(rating) {
@@ -758,6 +887,8 @@
         `;
         return;
       }
+
+      document.getElementById("topCasinoBtn").href = data[0].link;
 
       list.innerHTML = data.map((c, i) => `
         <article class="casino-card ${i === 0 ? "featured" : ""}">
