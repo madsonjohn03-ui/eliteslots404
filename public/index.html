@@ -7,14 +7,15 @@
 
   <style>
     :root {
-      --bg: #0a0b0f;
-      --panel: #14161b;
-      --panel-2: #1a1d23;
-      --text: #f2f2f2;
-      --muted: #b8bcc7;
-      --gold: #f2a94b;
-      --gold-dark: #d78d2f;
-      --line: rgba(255,255,255,0.06);
+      --bg: #050505;
+      --panel: #0d0d0d;
+      --panel-2: #111111;
+      --line: #2a2a2a;
+      --gold: #f2b233;
+      --gold-dark: #d89a22;
+      --white: #f5f5f5;
+      --muted: #b9b9b9;
+      --green: #1ad37c;
     }
 
     * {
@@ -24,114 +25,234 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #07080c 0%, #0d1016 100%);
-      color: var(--text);
+      background: var(--bg);
+      color: var(--white);
     }
 
-    header {
-      text-align: center;
-      padding: 24px 16px;
-      font-size: 28px;
-      font-weight: 800;
-      color: #fff;
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .topbar {
       border-bottom: 1px solid var(--line);
-      background: rgba(0,0,0,0.25);
-      backdrop-filter: blur(8px);
+      background: #070707;
+    }
+
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .brand-icon {
+      color: var(--gold);
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .brand span:last-child {
+      color: var(--gold);
+    }
+
+    .nav {
+      display: flex;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .nav a {
+      color: #ddd;
+      font-size: 17px;
+      position: relative;
+      padding: 8px 0;
+    }
+
+    .nav a.active {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -15px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .admin-btn {
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 16px;
     }
 
     .hero {
       text-align: center;
-      padding: 34px 16px 10px;
+      padding: 38px 20px 26px;
     }
 
     .hero h1 {
       margin: 0;
-      font-size: 38px;
-      line-height: 1.05;
+      font-size: clamp(44px, 5vw, 72px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 .gold {
+      color: var(--gold);
     }
 
     .hero p {
       margin: 14px 0 0;
-      color: var(--muted);
-      font-size: 16px;
+      color: #d0d0d0;
+      font-size: 18px;
     }
 
     .cards-wrap {
-      max-width: 1200px;
+      max-width: 1560px;
       margin: 0 auto;
-      padding: 28px 16px 40px;
+      padding: 10px 24px 26px;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(4, minmax(260px, 1fr));
       gap: 22px;
-      align-items: stretch;
     }
 
     .casino-card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 0;
+      background: #080808;
+      border: 1px solid #555;
+      border-radius: 18px;
       overflow: hidden;
-      min-height: 520px;
+      position: relative;
+      min-height: 560px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-    }
-
-    .casino-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 46px rgba(0,0,0,0.45);
-      border-color: rgba(242,169,75,0.35);
     }
 
     .casino-card.top {
-      outline: 2px solid rgba(242,169,75,0.35);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(242,178,51,.25), 0 0 24px rgba(242,178,51,.12);
+    }
+
+    .rank-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: var(--gold);
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 22px;
+      z-index: 2;
+    }
+
+    .top-ribbon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--gold);
+      color: #111;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 14px 18px 14px 28px;
+      clip-path: polygon(18px 0, 100% 0, 100% 100%, 0 100%, 0 18px);
+      z-index: 2;
     }
 
     .card-head {
-      padding: 26px 20px;
-      background: #111319;
-      border-bottom: 1px solid var(--line);
+      padding: 64px 24px 18px;
       text-align: center;
+      border-bottom: 1px solid #2c2c2c;
     }
 
-    .card-rank {
-      display: inline-block;
-      margin-bottom: 10px;
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      color: #111;
-      background: linear-gradient(135deg, var(--gold), #ffbf6a);
-    }
-
-    .card-name {
-      margin: 0;
-      font-size: 24px;
+    .casino-logo {
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
       font-weight: 900;
-      letter-spacing: 0.02em;
+      letter-spacing: -1px;
       text-transform: uppercase;
     }
 
-    .card-body {
-      flex: 1;
-      padding: 22px 18px 12px;
-      background: linear-gradient(180deg, #171a20 0%, #13161b 100%);
+    .casino-logo.small {
+      font-size: 30px;
+    }
+
+    .logo-red { color: #ff3b3b; }
+    .logo-green { color: #1dd382; }
+    .logo-blue { color: #40a8ff; }
+    .logo-white { color: #f1f1f1; }
+
+    .stars {
+      color: var(--gold);
+      font-size: 18px;
+      letter-spacing: 3px;
+      margin-top: 12px;
     }
 
     .card-bonus {
-      margin: 0 0 18px;
-      color: #fff;
-      font-size: 15px;
-      line-height: 1.5;
+      padding: 18px 24px 10px;
       text-align: center;
-      font-weight: 700;
+    }
+
+    .bonus-label {
+      color: #efefef;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .bonus-main {
+      color: var(--gold);
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.12;
+    }
+
+    .bonus-sub {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.12;
+      margin-top: 4px;
+    }
+
+    .features-box {
+      margin: 12px 18px 16px;
+      border: 1px solid #3a3222;
+      border-radius: 12px;
+      padding: 16px 16px 8px;
+      background: #0a0a0a;
     }
 
     .features {
@@ -146,199 +267,346 @@
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      color: #f3f3f3;
-      font-size: 15px;
-      line-height: 1.45;
+      color: #f2f2f2;
+      font-size: 16px;
+      line-height: 1.3;
     }
 
-    .bullet {
-      flex: 0 0 18px;
-      width: 18px;
-      height: 18px;
+    .check {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
       border-radius: 50%;
-      margin-top: 2px;
+      background: var(--gold);
+      color: #111;
+      font-size: 14px;
+      font-weight: 900;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: var(--gold);
-      color: #111;
-      font-size: 12px;
-      font-weight: 900;
+      margin-top: 1px;
     }
 
     .card-footer {
-      padding: 18px;
-      background: #13151a;
       margin-top: auto;
+      padding: 0 18px 18px;
     }
 
     .claim-btn {
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 14px;
       width: 100%;
       min-height: 54px;
-      border-radius: 10px;
-      background: linear-gradient(180deg, #f0ab4c 0%, #e79c3f 100%);
+      border-radius: 12px;
+      background: var(--gold);
       color: #111;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 22px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-      transition: transform 0.15s ease, filter 0.15s ease;
+      font-size: 18px;
+      font-weight: 900;
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,.15);
     }
 
-    .claim-btn:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
+    .claim-btn .arrow {
+      font-size: 28px;
+      line-height: 1;
+      margin-top: -1px;
+    }
+
+    .view-all-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 18px 0 10px;
+    }
+
+    .view-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: 14px 26px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 800;
+      background: transparent;
+    }
+
+    .payments {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-top: 18px;
+      padding: 16px 24px;
+    }
+
+    .payments-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 48px;
+      color: #d7d7d7;
+      font-size: 24px;
+      font-weight: 700;
+      opacity: .9;
     }
 
     .footer {
-      margin-top: 10px;
-      padding: 28px 16px 110px;
-      text-align: center;
-      color: #7b8599;
-      border-top: 1px solid var(--line);
-    }
-
-    .sticky-bar {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 100;
-      background: rgba(10, 12, 17, 0.96);
-      border-top: 1px solid var(--line);
-      backdrop-filter: blur(10px);
-    }
-
-    .sticky-inner {
-      max-width: 1200px;
+      max-width: 1560px;
       margin: 0 auto;
-      padding: 12px 16px;
+      padding: 22px 24px 34px;
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr 1fr;
+      gap: 24px;
+      align-items: start;
+      color: #d0d0d0;
+    }
+
+    .footer-left {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 14px;
     }
 
-    .sticky-copy strong {
+    .age-badge {
+      width: 54px;
+      height: 54px;
+      border: 2px solid #aaa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 900;
+      color: #ddd;
+    }
+
+    .aware {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .aware small {
       display: block;
+      color: #aaa;
+      font-weight: 400;
+      margin-top: 4px;
       font-size: 14px;
-      color: #fff;
     }
 
-    .sticky-copy span {
-      font-size: 12px;
-      color: var(--muted);
+    .footer-center {
+      font-size: 16px;
+      line-height: 1.55;
+      color: #c7c7c7;
     }
 
-    .sticky-btn {
-      white-space: nowrap;
-      padding: 12px 22px;
-      border-radius: 10px;
-      background: linear-gradient(180deg, #f0ab4c 0%, #e79c3f 100%);
-      color: #111;
-      text-decoration: none;
-      font-weight: 800;
+    .footer-right {
+      text-align: right;
+      font-size: 15px;
+      color: #c9c9c9;
     }
 
-    @media (max-width: 640px) {
+    .footer-right .links {
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1280px) {
+      .cards {
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+      }
+
+      .footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-left {
+        justify-content: center;
+      }
+
+      .footer-right {
+        text-align: center;
+      }
+
+      .footer-right .links {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
       .hero h1 {
-        font-size: 30px;
+        font-size: 42px;
+      }
+
+      .payments-inner {
+        gap: 22px;
+        font-size: 18px;
       }
 
       .casino-card {
-        min-height: 480px;
-      }
-
-      .sticky-inner {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .sticky-btn {
-        text-align: center;
+        min-height: auto;
       }
     }
   </style>
 </head>
 <body>
-  <header>EliteSlots404</header>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon">♛</div>
+        <div>EliteSlots<span>404</span></div>
+      </div>
+
+      <nav class="nav">
+        <a class="active" href="#">Home</a>
+        <a href="#casino-list">Casinos</a>
+        <a href="#casino-list">Bonuses</a>
+        <a href="#casino-list">VIP</a>
+        <a href="#footer">About Us</a>
+      </nav>
+
+      <a href="/admin.html" class="admin-btn">🔒 Admin Panel</a>
+    </div>
+  </header>
 
   <section class="hero">
-    <h1>Top Casino Picks</h1>
-    <p>Trusted offers, clean payouts, serious bonuses.</p>
+    <h1>TOP <span class="gold">ONLINE</span> CASINOS</h1>
+    <p>Exclusive casino bonuses & trusted gambling partners</p>
   </section>
 
-  <main class="cards-wrap">
+  <main class="cards-wrap" id="casino-list">
     <div class="cards" id="list"></div>
 
-    <div class="footer">
-      <div style="margin-bottom:18px; font-size:14px; color:#a7b0c3;">
-        ⚠️ Gambling can be addictive. Play responsibly.
-      </div>
-
-      <div style="display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:15px;">
-        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:6px 14px; border-radius:999px; font-weight:800; color:white; font-size:13px;">
-          18+
-        </div>
-
-        <a href="https://www.begambleaware.org" target="_blank" style="color: var(--gold); font-weight: 600;">
-          BeGambleAware.org
-        </a>
-      </div>
-
-      <a href="https://www.begambleaware.org" target="_blank">
-        <img
-          src="https://www.begambleaware.org/wp-content/themes/begambleaware/assets/img/logo.svg"
-          style="height:32px; opacity:0.8; filter:brightness(0.9);"
-        >
-      </a>
-
-      <div style="margin-top:20px; opacity:0.85;">
-        <span style="margin: 0 6px;">💳 Visa</span>
-        <span style="margin: 0 6px;">💳 Mastercard</span>
-        <span style="margin: 0 6px;">₿ Bitcoin</span>
-        <span style="margin: 0 6px;">🪙 Crypto</span>
-      </div>
-
-      <div style="margin-top:18px; font-size:11px; color:#5f6a7d; max-width:700px; margin-left:auto; margin-right:auto; line-height:1.6;">
-        This website is intended for users aged 18 and over. Gambling may be restricted or illegal in some jurisdictions.
-        Users are responsible for ensuring compliance with local laws before participating in any gambling activities.
-      </div>
-
-      <div style="margin-top:20px; font-size:12px; color:#7b8599;">
-        © 2026 EliteSlots404 — All rights reserved.
-      </div>
+    <div class="view-all-wrap">
+      <a href="#casino-list" class="view-all-btn">View All Casinos ⬛</a>
     </div>
   </main>
 
-  <div class="sticky-bar">
-    <div class="sticky-inner">
-      <div class="sticky-copy">
-        <strong>Ready to claim the top offer?</strong>
-        <span>Open the highest-ranked casino on this page.</span>
-      </div>
-      <a id="topCasinoBtn" class="sticky-btn" href="#" target="_blank" rel="noopener noreferrer">
-        Claim Top Casino
-      </a>
+  <section class="payments">
+    <div class="payments-inner">
+      <span>VISA</span>
+      <span>Mastercard</span>
+      <span>Apple Pay</span>
+      <span>bitcoin</span>
+      <span>tether</span>
+      <span>ethereum</span>
+      <span>litecoin</span>
+      <span>ripple</span>
     </div>
-  </div>
+  </section>
+
+  <footer class="footer" id="footer">
+    <div class="footer-left">
+      <div class="age-badge">18+</div>
+      <div class="aware">
+        BeGambleAware.org
+        <small>Play Responsibly</small>
+      </div>
+    </div>
+
+    <div class="footer-center">
+      Gambling can be addictive. Play responsibly. Only for 18+.<br>
+      We may earn a commission from links on this site at no extra cost to you.<br>
+      Make sure to check the terms and conditions on the casino website.
+    </div>
+
+    <div class="footer-right">
+      © 2026 EliteSlots404. All rights reserved.
+      <div class="links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
 
   <script>
-    function bonusFeatures(casino) {
-      const bonus = (casino.bonus || "").toLowerCase();
+    function buildFeatures(casino, index) {
       const features = [];
 
-      if (bonus.includes("no kyc")) features.push("No KYC");
-      if (bonus.includes("instant")) features.push("Instant Withdraw");
-      if (bonus.includes("crypto")) features.push("Crypto Friendly");
+      features.push("Instant Withdraw");
+      features.push("No KYC");
 
-      features.push(casino.bonus || "Exclusive Casino Bonus");
-      features.push("Card withdraw available");
+      if (casino.bonus) {
+        features.push(casino.bonus);
+      }
+
+      const extras = [
+        "Card withdraw available",
+        "100+ Crypto Games",
+        "Live Casino Games",
+        "Huge Sportsbook"
+      ];
+
+      if (features.length < 4) {
+        features.push(extras[index % extras.length]);
+      }
 
       return features.slice(0, 4);
+    }
+
+    function renderLogo(name, index) {
+      const safeName = (name || "Casino").toUpperCase();
+
+      if (index === 0) {
+        return `<span class="logo-white">BET</span><span class="logo-red">FURY</span>`;
+      }
+      if (index === 1) {
+        return `<span class="logo-green">BC</span><span class="logo-white">.GAME</span>`;
+      }
+      if (index === 2) {
+        return `<span class="logo-white">COIN</span><span class="logo-green">PLAY</span>`;
+      }
+      if (index === 3) {
+        return `<span class="logo-blue">1</span><span class="logo-white">WIN</span>`;
+      }
+
+      return `<span class="logo-white">${safeName}</span>`;
+    }
+
+    function formatBonusLines(bonus) {
+      if (!bonus) {
+        return {
+          main: "WELCOME BONUS",
+          sub: "Exclusive Offer"
+        };
+      }
+
+      const text = bonus.trim();
+
+      if (text.includes("+")) {
+        const parts = text.split("+");
+        return {
+          main: parts[0].trim(),
+          sub: "+ " + parts.slice(1).join("+").trim()
+        };
+      }
+
+      return {
+        main: text,
+        sub: ""
+      };
     }
 
     async function load() {
@@ -351,34 +619,47 @@
         return;
       }
 
-      document.getElementById("topCasinoBtn").href = data[0].link;
-
       list.innerHTML = data.map((c, i) => {
-        const features = bonusFeatures(c)
+        const features = buildFeatures(c, i)
           .map(item => `
             <li>
-              <span class="bullet">✦</span>
+              <span class="check">✓</span>
               <span>${item}</span>
             </li>
           `)
           .join("");
 
+        const bonusLines = formatBonusLines(c.bonus);
+
         return `
           <article class="casino-card ${i === 0 ? "top" : ""}">
+            <div class="rank-badge">${i + 1}</div>
+            ${i === 0 ? `<div class="top-ribbon">TOP PICK</div>` : ""}
+
             <div class="card-head">
-              ${i === 0 ? `<div class="card-rank">Top Pick</div>` : ""}
-              <h2 class="card-name">${c.name}</h2>
+              <div class="casino-logo ${String(c.name).length > 10 ? "small" : ""}">
+                ${renderLogo(c.name, i)}
+              </div>
+              <div class="stars">★★★★★</div>
             </div>
 
-            <div class="card-body">
-              <p class="card-bonus">${c.bonus}</p>
+            <div class="card-bonus">
+              <div class="bonus-label">WELCOME BONUS</div>
+              <div class="bonus-main">${bonusLines.main}</div>
+              ${bonusLines.sub ? `<div class="bonus-sub">${bonusLines.sub}</div>` : ""}
+            </div>
+
+            <div class="features-box">
               <ul class="features">
                 ${features}
               </ul>
             </div>
 
             <div class="card-footer">
-              <a class="claim-btn" href="${c.link}" target="_blank" rel="noopener noreferrer">Claim</a>
+              <a class="claim-btn" href="${c.link}" target="_blank" rel="noopener noreferrer">
+                <span>Claim Bonus</span>
+                <span class="arrow">→</span>
+              </a>
             </div>
           </article>
         `;
