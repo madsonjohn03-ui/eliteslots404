@@ -55,30 +55,11 @@
       margin-top: 8px;
     }
 
-    .add-btn {
-      background: gold;
-      color: black;
-    }
-
-    .save-btn {
-      background: #00c853;
-      color: white;
-    }
-
-    .cancel-btn {
-      background: #666;
-      color: white;
-    }
-
-    .delete-btn {
-      background: #ff4d4f;
-      color: white;
-    }
-
-    .edit-btn {
-      background: #2196f3;
-      color: white;
-    }
+    .add-btn { background: gold; color: black; }
+    .save-btn { background: #00c853; color: white; }
+    .cancel-btn { background: #666; color: white; }
+    .delete-btn { background: #ff4d4f; color: white; }
+    .edit-btn { background: #2196f3; color: white; }
 
     .casino-list {
       max-width: 1000px;
@@ -98,9 +79,7 @@
       gap: 16px;
     }
 
-    .casino-info {
-      flex: 1;
-    }
+    .casino-info { flex: 1; }
 
     .casino-info h3 {
       margin: 0 0 8px;
@@ -164,6 +143,7 @@
     <input name="bonus" placeholder="Bonus" required><br>
     <input name="link" placeholder="Link" required><br>
     <input name="rating" placeholder="Rating" required><br>
+    <input name="sort_order" placeholder="Sort Order (1 = first, 2 = second...)"><br>
     <input name="logo" placeholder="Logo URL"><br>
     <input name="badge" placeholder="Badge text (pl. Best for Crypto)"><br>
     <input name="feature_1" placeholder="Feature 1"><br>
@@ -215,6 +195,7 @@
               ${c.top_pick ? `<span class="top-pick-badge">TOP PICK</span>` : ""}
             </h3>
 
+            <p><strong>Sort Order:</strong> ${escapeHtml(c.sort_order ?? "-")}</p>
             <p><strong>Bonus:</strong> ${escapeHtml(c.bonus)}</p>
             <p><strong>Rating:</strong> ⭐ ${escapeHtml(c.rating)}</p>
             <p><strong>Link:</strong> ${escapeHtml(c.link)}</p>
@@ -232,6 +213,7 @@
               <input id="edit-bonus-${c.id}" value="${escapeHtml(c.bonus)}" placeholder="Bonus">
               <input id="edit-link-${c.id}" value="${escapeHtml(c.link)}" placeholder="Link">
               <input id="edit-rating-${c.id}" value="${escapeHtml(c.rating)}" placeholder="Rating">
+              <input id="edit-sort-order-${c.id}" value="${escapeHtml(c.sort_order ?? "")}" placeholder="Sort Order">
               <input id="edit-logo-${c.id}" value="${escapeHtml(c.logo || "")}" placeholder="Logo URL">
               <input id="edit-badge-${c.id}" value="${escapeHtml(c.badge || "")}" placeholder="Badge text">
               <input id="edit-feature1-${c.id}" value="${escapeHtml(c.feature_1 || "")}" placeholder="Feature 1">
@@ -292,6 +274,7 @@
         bonus: document.getElementById("edit-bonus-" + id).value,
         link: document.getElementById("edit-link-" + id).value,
         rating: document.getElementById("edit-rating-" + id).value,
+        sort_order: document.getElementById("edit-sort-order-" + id).value,
         logo: document.getElementById("edit-logo-" + id).value,
         badge: document.getElementById("edit-badge-" + id).value,
         feature_1: document.getElementById("edit-feature1-" + id).value,
