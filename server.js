@@ -1,6 +1,7 @@
 const express = require("express");
 const { createClient } = require("@supabase/supabase-js");
 const fetch = require("node-fetch");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,15 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
   global: { fetch }
 });
 
+function slugify(text) {
+  return String(text || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 app.get("/api/casinos", async (req, res) => {
   const { data, error } = await supabase
     .from("casinos")
@@ -26,6 +36,26 @@ app.get("/api/casinos", async (req, res) => {
 
   if (error) {
     return res.status(500).json({ error: error.message });
+  }
+
+  res.json(data);
+});
+
+app.get("/api/casinos/:slug", async (req, res) => {
+  const slug = req.params.slug;
+
+  const { data, error } = await supabase
+    .from("casinos")
+    .select("*")
+    .eq("slug", slug)
+    .maybeSingle();
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  if (!data) {
+    return res.status(404).json({ error: "Casino not found" });
   }
 
   res.json(data);
@@ -43,7 +73,13 @@ app.post("/api/casinos", async (req, res) => {
     feature_2,
     feature_3,
     feature_4,
-    sort_order
+    sort_order,
+    slug,
+    review_title,
+    meta_description,
+    review_text,
+    pros,
+    cons
   } = req.body;
 
   const top_pick = req.body.top_pick === "on";
@@ -60,7 +96,13 @@ app.post("/api/casinos", async (req, res) => {
     feature_2: feature_2 || null,
     feature_3: feature_3 || null,
     feature_4: feature_4 || null,
-    sort_order: sort_order ? Number(sort_order) : null
+    sort_order: sort_order ? Number(sort_order) : null,
+    slug: slug ? slugify(slug) : slugify(name),
+    review_title: review_title || null,
+    meta_description: meta_description || null,
+    review_text: review_text || null,
+    pros: pros || null,
+    cons: cons || null
   };
 
   const { data, error } = await supabase
@@ -89,7 +131,13 @@ app.put("/api/casinos/:id", async (req, res) => {
     feature_2,
     feature_3,
     feature_4,
-    sort_order
+    sort_order,
+    slug,
+    review_title,
+    meta_description,
+    review_text,
+    pros,
+    cons
   } = req.body;
 
   const top_pick = req.body.top_pick === "on";
@@ -106,7 +154,13 @@ app.put("/api/casinos/:id", async (req, res) => {
     feature_2: feature_2 || null,
     feature_3: feature_3 || null,
     feature_4: feature_4 || null,
-    sort_order: sort_order ? Number(sort_order) : null
+    sort_order: sort_order ? Number(sort_order) : null,
+    slug: slug ? slugify(slug) : slugify(name),
+    review_title: review_title || null,
+    meta_description: meta_description || null,
+    review_text: review_text || null,
+    pros: pros || null,
+    cons: cons || null
   };
 
   const { data, error } = await supabase
@@ -135,6 +189,10 @@ app.delete("/api/casinos/:id", async (req, res) => {
   }
 
   res.json({ success: true });
+});
+
+app.get("/casino/:slug", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "casino.html"));
 });
 
 app.listen(PORT, () => {
