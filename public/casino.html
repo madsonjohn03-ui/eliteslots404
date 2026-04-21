@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casino Review</title>
+  <meta name="description" content="Casino review" />
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #0d0d0d;
+      --line: #2a2a2a;
+      --gold: #f2b233;
+      --white: #f5f5f5;
+      --muted: #b9b9b9;
+      --green: #1ad37c;
+      --red: #ff5c5c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: #070707;
+    }
+
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .brand-icon { color: var(--gold); }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    .back {
+      display: inline-block;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .hero-card,
+    .side-card,
+    .content-card {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .logo {
+      max-width: 180px;
+      max-height: 80px;
+      object-fit: contain;
+      margin-bottom: 16px;
+    }
+
+    .title {
+      font-size: 42px;
+      line-height: 1.05;
+      margin: 0 0 12px;
+      font-weight: 900;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(242,178,51,.4);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .bonus {
+      color: var(--gold);
+      font-size: 28px;
+      font-weight: 900;
+      margin: 12px 0;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 12px;
+      background: var(--gold);
+      color: #111;
+      font-weight: 900;
+    }
+
+    .side-card h3,
+    .content-card h2 {
+      margin-top: 0;
+      color: var(--gold);
+    }
+
+    .feature-list,
+    .pros-cons {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .feature-list li,
+    .pros-cons li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .dot-good,
+    .dot-bad {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      color: #111;
+      margin-top: 2px;
+    }
+
+    .dot-good { background: var(--gold); }
+    .dot-bad { background: var(--red); }
+
+    .content-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #9a9a9a;
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .title {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon">♛</div>
+        <div>EliteSlots<span style="color:#f2b233;">404</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <a class="back" href="/">← Back to Home</a>
+
+    <div class="hero">
+      <div class="hero-card">
+        <div id="heroLogo"></div>
+        <div id="heroBadge"></div>
+        <h1 class="title" id="heroTitle">Casino Review</h1>
+        <div class="bonus" id="heroBonus"></div>
+        <div class="meta" id="heroMeta"></div>
+        <a id="heroBtn" class="cta" href="#" target="_blank" rel="noopener noreferrer">Claim Bonus</a>
+      </div>
+
+      <div class="side-card">
+        <h3>Key Features</h3>
+        <ul class="feature-list" id="featureList"></ul>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <h2>Review Overview</h2>
+        <div id="reviewText"></div>
+      </div>
+
+      <div class="content-card">
+        <h2>Pros</h2>
+        <ul class="pros-cons" id="prosList"></ul>
+      </div>
+
+      <div class="content-card">
+        <h2>Cons</h2>
+        <ul class="pros-cons" id="consList"></ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      18+ Gamble responsibly | BeGambleAware.org
+    </div>
+  </div>
+
+  <script>
+    function splitLines(text) {
+      return String(text || "")
+        .split("\n")
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
+
+    async function loadCasino() {
+      const slug = window.location.pathname.split("/").pop();
+      const res = await fetch("/api/casinos/" + slug);
+
+      if (!res.ok) {
+        document.body.innerHTML = '<div style="padding:40px;color:white;background:#050505;font-family:Arial;">Casino not found.</div>';
+        return;
+      }
+
+      const c = await res.json();
+
+      document.title = (c.review_title || c.name + " Review") + " - EliteSlots404";
+
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) {
+        meta.setAttribute("content", c.meta_description || (c.name + " review, bonus, pros, cons and features."));
+      }
+
+      document.getElementById("heroLogo").innerHTML = c.logo
+        ? `<img class="logo" src="${c.logo}" alt="${c.name} logo">`
+        : "";
+
+      document.getElementById("heroBadge").innerHTML = c.badge
+        ? `<div class="badge">${c.badge}</div>`
+        : "";
+
+      document.getElementById("heroTitle").textContent = c.review_title || (c.name + " Review");
+      document.getElementById("heroBonus").textContent = c.bonus || "";
+      document.getElementById("heroMeta").textContent = `Rating: ${c.rating}/5`;
+      document.getElementById("heroBtn").href = c.link;
+
+      const features = [c.feature_1, c.feature_2, c.feature_3, c.feature_4].filter(Boolean);
+      document.getElementById("featureList").innerHTML = features.map(f => `
+        <li><span class="dot-good">✓</span><span>${f}</span></li>
+      `).join("");
+
+      document.getElementById("reviewText").innerHTML =
+        splitLines(c.review_text || `${c.name} is one of the featured casino brands on EliteSlots404. It offers competitive promotions, modern gameplay options, and a user-friendly experience for players looking for online casino bonuses.`)
+          .map(p => `<p>${p}</p>`)
+          .join("");
+
+      const pros = splitLines(c.pros || "Strong bonus\nEasy to use\nFast withdrawals");
+      const cons = splitLines(c.cons || "Bonus terms may vary");
+
+      document.getElementById("prosList").innerHTML = pros.map(p => `
+        <li><span class="dot-good">✓</span><span>${p}</span></li>
+      `).join("");
+
+      document.getElementById("consList").innerHTML = cons.map(p => `
+        <li><span class="dot-bad">–</span><span>${p}</span></li>
+      `).join("");
+    }
+
+    loadCasino();
+  </script>
+</body>
+</html>
