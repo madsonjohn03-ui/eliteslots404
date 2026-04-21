@@ -26,6 +26,7 @@ function slugify(text) {
     .replace(/-+/g, "-");
 }
 
+// GET all casinos
 app.get("/api/casinos", async (req, res) => {
   const { data, error } = await supabase
     .from("casinos")
@@ -41,6 +42,7 @@ app.get("/api/casinos", async (req, res) => {
   res.json(data);
 });
 
+// GET one casino by slug
 app.get("/api/casinos/:slug", async (req, res) => {
   const slug = req.params.slug;
 
@@ -61,6 +63,7 @@ app.get("/api/casinos/:slug", async (req, res) => {
   res.json(data);
 });
 
+// ADD casino
 app.post("/api/casinos", async (req, res) => {
   const {
     name,
@@ -79,7 +82,8 @@ app.post("/api/casinos", async (req, res) => {
     meta_description,
     review_text,
     pros,
-    cons
+    cons,
+    faq
   } = req.body;
 
   const top_pick = req.body.top_pick === "on";
@@ -102,7 +106,8 @@ app.post("/api/casinos", async (req, res) => {
     meta_description: meta_description || null,
     review_text: review_text || null,
     pros: pros || null,
-    cons: cons || null
+    cons: cons || null,
+    faq: faq || null
   };
 
   const { data, error } = await supabase
@@ -117,6 +122,7 @@ app.post("/api/casinos", async (req, res) => {
   res.json({ success: true, data });
 });
 
+// UPDATE casino
 app.put("/api/casinos/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -137,7 +143,8 @@ app.put("/api/casinos/:id", async (req, res) => {
     meta_description,
     review_text,
     pros,
-    cons
+    cons,
+    faq
   } = req.body;
 
   const top_pick = req.body.top_pick === "on";
@@ -160,7 +167,8 @@ app.put("/api/casinos/:id", async (req, res) => {
     meta_description: meta_description || null,
     review_text: review_text || null,
     pros: pros || null,
-    cons: cons || null
+    cons: cons || null,
+    faq: faq || null
   };
 
   const { data, error } = await supabase
@@ -176,6 +184,7 @@ app.put("/api/casinos/:id", async (req, res) => {
   res.json({ success: true, data });
 });
 
+// DELETE casino
 app.delete("/api/casinos/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -191,6 +200,7 @@ app.delete("/api/casinos/:id", async (req, res) => {
   res.json({ success: true });
 });
 
+// SEO review page route
 app.get("/casino/:slug", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "casino.html"));
 });
