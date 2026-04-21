@@ -23,14 +23,21 @@
       margin-bottom: 30px;
     }
 
-    input {
+    input,
+    textarea {
       padding: 12px;
       margin: 6px 0;
-      width: 360px;
+      width: 420px;
       max-width: 92%;
       border-radius: 8px;
       border: none;
       outline: none;
+      font-family: Arial, sans-serif;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
     }
 
     label.checkbox {
@@ -62,7 +69,7 @@
     .edit-btn { background: #2196f3; color: white; }
 
     .casino-list {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
       text-align: left;
     }
@@ -79,7 +86,9 @@
       gap: 16px;
     }
 
-    .casino-info { flex: 1; }
+    .casino-info {
+      flex: 1;
+    }
 
     .casino-info h3 {
       margin: 0 0 8px;
@@ -105,10 +114,11 @@
       border-top: 1px solid rgba(255,255,255,0.08);
     }
 
-    .edit-form input {
+    .edit-form input,
+    .edit-form textarea {
       display: block;
       width: 100%;
-      max-width: 420px;
+      max-width: 520px;
       margin: 8px 0;
       background: #fff;
       color: #000;
@@ -150,6 +160,13 @@
     <input name="feature_2" placeholder="Feature 2"><br>
     <input name="feature_3" placeholder="Feature 3"><br>
     <input name="feature_4" placeholder="Feature 4"><br>
+
+    <input name="slug" placeholder="Slug (pl. mbit, onlyspins)"><br>
+    <input name="review_title" placeholder="Review title"><br>
+    <input name="meta_description" placeholder="Meta description"><br>
+    <textarea name="review_text" placeholder="Review text"></textarea><br>
+    <textarea name="pros" placeholder="Pros (one per line)"></textarea><br>
+    <textarea name="cons" placeholder="Cons (one per line)"></textarea><br>
 
     <label class="checkbox">
       <input type="checkbox" name="top_pick">
@@ -201,6 +218,9 @@
             <p><strong>Link:</strong> ${escapeHtml(c.link)}</p>
             <p><strong>Logo:</strong> ${escapeHtml(c.logo || "-")}</p>
             <p><strong>Badge:</strong> ${escapeHtml(c.badge || "-")}</p>
+            <p><strong>Slug:</strong> ${escapeHtml(c.slug || "-")}</p>
+            <p><strong>Review Title:</strong> ${escapeHtml(c.review_title || "-")}</p>
+            <p><strong>Meta Description:</strong> ${escapeHtml(c.meta_description || "-")}</p>
             <p><strong>Features:</strong>
               ${escapeHtml(c.feature_1 || "-")},
               ${escapeHtml(c.feature_2 || "-")},
@@ -220,6 +240,13 @@
               <input id="edit-feature2-${c.id}" value="${escapeHtml(c.feature_2 || "")}" placeholder="Feature 2">
               <input id="edit-feature3-${c.id}" value="${escapeHtml(c.feature_3 || "")}" placeholder="Feature 3">
               <input id="edit-feature4-${c.id}" value="${escapeHtml(c.feature_4 || "")}" placeholder="Feature 4">
+
+              <input id="edit-slug-${c.id}" value="${escapeHtml(c.slug || "")}" placeholder="Slug">
+              <input id="edit-review-title-${c.id}" value="${escapeHtml(c.review_title || "")}" placeholder="Review title">
+              <input id="edit-meta-description-${c.id}" value="${escapeHtml(c.meta_description || "")}" placeholder="Meta description">
+              <textarea id="edit-review-text-${c.id}" placeholder="Review text">${escapeHtml(c.review_text || "")}</textarea>
+              <textarea id="edit-pros-${c.id}" placeholder="Pros">${escapeHtml(c.pros || "")}</textarea>
+              <textarea id="edit-cons-${c.id}" placeholder="Cons">${escapeHtml(c.cons || "")}</textarea>
 
               <label class="checkbox">
                 <input type="checkbox" id="edit-top-pick-${c.id}" ${c.top_pick ? "checked" : ""}>
@@ -281,6 +308,12 @@
         feature_2: document.getElementById("edit-feature2-" + id).value,
         feature_3: document.getElementById("edit-feature3-" + id).value,
         feature_4: document.getElementById("edit-feature4-" + id).value,
+        slug: document.getElementById("edit-slug-" + id).value,
+        review_title: document.getElementById("edit-review-title-" + id).value,
+        meta_description: document.getElementById("edit-meta-description-" + id).value,
+        review_text: document.getElementById("edit-review-text-" + id).value,
+        pros: document.getElementById("edit-pros-" + id).value,
+        cons: document.getElementById("edit-cons-" + id).value,
         top_pick: document.getElementById("edit-top-pick-" + id).checked ? "on" : ""
       });
 
