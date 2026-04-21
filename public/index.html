@@ -365,24 +365,85 @@
       white-space: nowrap;
     }
 
-    .payments {
+    .payments-strip {
+      position: relative;
+      overflow: hidden;
+      margin-top: 18px;
+      padding: 18px 0;
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
-      margin-top: 18px;
-      padding: 16px 24px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+        #050505;
     }
 
-    .payments-inner {
-      max-width: 1560px;
-      margin: 0 auto;
+    .payments-strip::before,
+    .payments-strip::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: translateY(-50%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .payments-strip::before {
+      left: 0;
+    }
+
+    .payments-strip::after {
+      right: 0;
+    }
+
+    .payments-track {
       display: flex;
+      align-items: center;
+      gap: 26px;
+      width: max-content;
+      padding-left: 30px;
+      animation: paymentScroll 22s linear infinite;
+    }
+
+    .payment-item {
+      width: 86px;
+      height: 86px;
+      min-width: 86px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 48px;
-      color: #d7d7d7;
-      font-size: 24px;
-      font-weight: 700;
-      opacity: .9;
+      font-size: 38px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), rgba(255,255,255,0.01)),
+        #0c0c0c;
+      border: 1px solid rgba(242,178,51,0.28);
+      box-shadow:
+        0 0 0 1px rgba(242,178,51,0.08),
+        0 0 20px rgba(242,178,51,0.08),
+        inset 0 0 18px rgba(255,255,255,0.03);
+    }
+
+    .payment-dot {
+      width: 12px;
+      height: 12px;
+      min-width: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 12px rgba(242,178,51,0.9);
+    }
+
+    @keyframes paymentScroll {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
     }
 
     .footer {
@@ -481,11 +542,6 @@
         font-size: 42px;
       }
 
-      .payments-inner {
-        gap: 22px;
-        font-size: 18px;
-      }
-
       .casino-card {
         min-height: auto;
       }
@@ -497,6 +553,24 @@
 
       .sticky-btn {
         text-align: center;
+      }
+
+      .payment-item {
+        width: 68px;
+        height: 68px;
+        min-width: 68px;
+        font-size: 30px;
+      }
+
+      .payment-dot {
+        width: 10px;
+        height: 10px;
+        min-width: 10px;
+      }
+
+      .payments-track {
+        gap: 18px;
+        animation-duration: 18s;
       }
     }
   </style>
@@ -524,16 +598,53 @@
     </div>
   </main>
 
-  <section class="payments">
-    <div class="payments-inner">
-      <span>VISA</span>
-      <span>Mastercard</span>
-      <span>Apple Pay</span>
-      <span>bitcoin</span>
-      <span>tether</span>
-      <span>ethereum</span>
-      <span>litecoin</span>
-      <span>ripple</span>
+  <section class="payments-strip">
+    <div class="payments-track">
+      <div class="payment-item">💳</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">💠</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">🍎</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">₿</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">🟢</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">💎</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">Ł</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">◈</div>
+
+      <div class="payment-item">💳</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">💠</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">🍎</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">₿</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">🟢</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">💎</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">Ł</div>
+      <div class="payment-dot"></div>
+
+      <div class="payment-item">◈</div>
     </div>
   </section>
 
@@ -643,8 +754,8 @@
       return String(casino.name || "")
         .toLowerCase()
         .trim()
-        .replace(/[^a-z0-9\\s-]/g, "")
-        .replace(/\\s+/g, "-")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
         .replace(/-+/g, "-");
     }
 
