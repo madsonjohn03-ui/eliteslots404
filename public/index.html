@@ -105,7 +105,7 @@
       border-radius: 18px;
       overflow: hidden;
       position: relative;
-      min-height: 620px;
+      min-height: 660px;
       display: flex;
       flex-direction: column;
     }
@@ -294,6 +294,15 @@
       font-size: 28px;
       line-height: 1;
       margin-top: -1px;
+    }
+
+    .review-link {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 14px;
     }
 
     .view-all-wrap {
@@ -629,6 +638,16 @@
       };
     }
 
+    function makeSlug(casino) {
+      if (casino.slug) return casino.slug;
+      return String(casino.name || "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\\s-]/g, "")
+        .replace(/\\s+/g, "-")
+        .replace(/-+/g, "-");
+    }
+
     async function load() {
       const res = await fetch("/api/casinos");
       const data = await res.json();
@@ -653,6 +672,7 @@
           .join("");
 
         const bonusLines = formatBonusLines(c.bonus);
+        const slug = makeSlug(c);
 
         return `
           <article class="casino-card ${c.top_pick ? "top" : ""}">
@@ -683,6 +703,10 @@
               <a class="claim-btn" href="${c.link}" target="_blank" rel="noopener noreferrer">
                 <span>Claim Bonus</span>
                 <span class="arrow">→</span>
+              </a>
+
+              <a class="review-link" href="/casino/${slug}">
+                Read Review
               </a>
             </div>
           </article>
