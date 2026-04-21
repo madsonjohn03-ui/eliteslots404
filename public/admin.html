@@ -167,6 +167,7 @@
     <textarea name="review_text" placeholder="Review text"></textarea><br>
     <textarea name="pros" placeholder="Pros (one per line)"></textarea><br>
     <textarea name="cons" placeholder="Cons (one per line)"></textarea><br>
+    <textarea name="faq" placeholder="FAQ (Q: ... / A: ... soronként)"></textarea><br>
 
     <label class="checkbox">
       <input type="checkbox" name="top_pick">
@@ -247,6 +248,7 @@
               <textarea id="edit-review-text-${c.id}" placeholder="Review text">${escapeHtml(c.review_text || "")}</textarea>
               <textarea id="edit-pros-${c.id}" placeholder="Pros">${escapeHtml(c.pros || "")}</textarea>
               <textarea id="edit-cons-${c.id}" placeholder="Cons">${escapeHtml(c.cons || "")}</textarea>
+              <textarea id="edit-faq-${c.id}" placeholder="FAQ">${escapeHtml(c.faq || "")}</textarea>
 
               <label class="checkbox">
                 <input type="checkbox" id="edit-top-pick-${c.id}" ${c.top_pick ? "checked" : ""}>
@@ -314,6 +316,7 @@
         review_text: document.getElementById("edit-review-text-" + id).value,
         pros: document.getElementById("edit-pros-" + id).value,
         cons: document.getElementById("edit-cons-" + id).value,
+        faq: document.getElementById("edit-faq-" + id).value,
         top_pick: document.getElementById("edit-top-pick-" + id).checked ? "on" : ""
       });
 
