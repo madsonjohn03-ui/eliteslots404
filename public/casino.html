@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Casino Review</title>
   <meta name="description" content="Casino review" />
+
   <style>
     :root {
       --bg: #050505;
@@ -17,7 +18,9 @@
       --red: #ff5c5c;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -53,7 +56,9 @@
       font-weight: 800;
     }
 
-    .brand-icon { color: var(--gold); }
+    .brand-icon {
+      color: var(--gold);
+    }
 
     .wrap {
       max-width: 1100px;
@@ -172,12 +177,31 @@
       margin-top: 2px;
     }
 
-    .dot-good { background: var(--gold); }
-    .dot-bad { background: var(--red); }
+    .dot-good {
+      background: var(--gold);
+    }
+
+    .dot-bad {
+      background: var(--red);
+    }
 
     .content-grid {
       display: grid;
       gap: 22px;
+    }
+
+    .faq-item {
+      margin-bottom: 16px;
+    }
+
+    .faq-q {
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .faq-a {
+      color: #ddd;
     }
 
     .footer {
@@ -242,6 +266,11 @@
         <h2>Cons</h2>
         <ul class="pros-cons" id="consList"></ul>
       </div>
+
+      <div class="content-card">
+        <h2>Frequently Asked Questions</h2>
+        <div id="faqList"></div>
+      </div>
     </div>
 
     <div class="footer">
@@ -255,6 +284,34 @@
         .split("\n")
         .map(s => s.trim())
         .filter(Boolean);
+    }
+
+    function parseFAQ(text) {
+      if (!text) return [];
+
+      const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+      const items = [];
+
+      let currentQ = null;
+      let currentA = [];
+
+      lines.forEach(line => {
+        if (line.startsWith("Q:")) {
+          if (currentQ) {
+            items.push({ q: currentQ, a: currentA.join(" ") });
+          }
+          currentQ = line.replace("Q:", "").trim();
+          currentA = [];
+        } else if (line.startsWith("A:")) {
+          currentA.push(line.replace("A:", "").trim());
+        }
+      });
+
+      if (currentQ) {
+        items.push({ q: currentQ, a: currentA.join(" ") });
+      }
+
+      return items;
     }
 
     async function loadCasino() {
@@ -272,7 +329,10 @@
 
       const meta = document.querySelector('meta[name="description"]');
       if (meta) {
-        meta.setAttribute("content", c.meta_description || (c.name + " review, bonus, pros, cons and features."));
+        meta.setAttribute(
+          "content",
+          c.meta_description || (c.name + " review, bonus, pros, cons and features.")
+        );
       }
 
       document.getElementById("heroLogo").innerHTML = c.logo
@@ -283,7 +343,9 @@
         ? `<div class="badge">${c.badge}</div>`
         : "";
 
-      document.getElementById("heroTitle").textContent = c.review_title || (c.name + " Review");
+      document.getElementById("heroTitle").textContent =
+        c.review_title || (c.name + " Review");
+
       document.getElementById("heroBonus").textContent = c.bonus || "";
       document.getElementById("heroMeta").textContent = `Rating: ${c.rating}/5`;
       document.getElementById("heroBtn").href = c.link;
@@ -294,7 +356,10 @@
       `).join("");
 
       document.getElementById("reviewText").innerHTML =
-        splitLines(c.review_text || `${c.name} is one of the featured casino brands on EliteSlots404. It offers competitive promotions, modern gameplay options, and a user-friendly experience for players looking for online casino bonuses.`)
+        splitLines(
+          c.review_text ||
+          `${c.name} is one of the featured casino brands on EliteSlots404. It offers competitive promotions, modern gameplay options, and a user-friendly experience for players looking for online casino bonuses.`
+        )
           .map(p => `<p>${p}</p>`)
           .join("");
 
@@ -308,6 +373,36 @@
       document.getElementById("consList").innerHTML = cons.map(p => `
         <li><span class="dot-bad">–</span><span>${p}</span></li>
       `).join("");
+
+      const faqItems = parseFAQ(c.faq);
+
+      document.getElementById("faqList").innerHTML = faqItems.map(f => `
+        <div class="faq-item">
+          <div class="faq-q">${f.q}</div>
+          <div class="faq-a">${f.a}</div>
+        </div>
+      `).join("");
+
+      if (faqItems.length > 0) {
+        const schema = {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqItems.map(f => ({
+            "@type": "Question",
+            "name": f.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": f.a
+            }
+          }))
+        };
+
+        const script = document.createElement("script");
+        script.type = "application/ld+json";
+        script.textContent = JSON.stringify(schema);
+
+        document.head.appendChild(script);
+      }
     }
 
     loadCasino();
