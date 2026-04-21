@@ -20,6 +20,7 @@ app.get("/api/casinos", async (req, res) => {
   const { data, error } = await supabase
     .from("casinos")
     .select("*")
+    .order("sort_order", { ascending: true, nullsFirst: false })
     .order("top_pick", { ascending: false })
     .order("id", { ascending: false });
 
@@ -41,7 +42,8 @@ app.post("/api/casinos", async (req, res) => {
     feature_1,
     feature_2,
     feature_3,
-    feature_4
+    feature_4,
+    sort_order
   } = req.body;
 
   const top_pick = req.body.top_pick === "on";
@@ -57,7 +59,8 @@ app.post("/api/casinos", async (req, res) => {
     feature_1: feature_1 || null,
     feature_2: feature_2 || null,
     feature_3: feature_3 || null,
-    feature_4: feature_4 || null
+    feature_4: feature_4 || null,
+    sort_order: sort_order ? Number(sort_order) : null
   };
 
   const { data, error } = await supabase
@@ -85,7 +88,8 @@ app.put("/api/casinos/:id", async (req, res) => {
     feature_1,
     feature_2,
     feature_3,
-    feature_4
+    feature_4,
+    sort_order
   } = req.body;
 
   const top_pick = req.body.top_pick === "on";
@@ -101,7 +105,8 @@ app.put("/api/casinos/:id", async (req, res) => {
     feature_1: feature_1 || null,
     feature_2: feature_2 || null,
     feature_3: feature_3 || null,
-    feature_4: feature_4 || null
+    feature_4: feature_4 || null,
+    sort_order: sort_order ? Number(sort_order) : null
   };
 
   const { data, error } = await supabase
