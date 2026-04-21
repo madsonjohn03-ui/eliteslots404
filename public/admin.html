@@ -26,11 +26,24 @@
     input {
       padding: 12px;
       margin: 6px 0;
-      width: 280px;
-      max-width: 90%;
+      width: 360px;
+      max-width: 92%;
       border-radius: 8px;
       border: none;
       outline: none;
+    }
+
+    label.checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0 14px;
+      font-weight: bold;
+    }
+
+    label.checkbox input {
+      width: auto;
+      margin: 0;
     }
 
     button {
@@ -50,19 +63,16 @@
     .save-btn {
       background: #00c853;
       color: white;
-      margin-left: 8px;
     }
 
     .cancel-btn {
-      background: #555;
+      background: #666;
       color: white;
-      margin-left: 8px;
     }
 
     .delete-btn {
       background: #ff4d4f;
       color: white;
-      margin-left: 8px;
     }
 
     .edit-btn {
@@ -71,7 +81,7 @@
     }
 
     .casino-list {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
       text-align: left;
     }
@@ -88,8 +98,12 @@
       gap: 16px;
     }
 
+    .casino-info {
+      flex: 1;
+    }
+
     .casino-info h3 {
-      margin: 0 0 6px 0;
+      margin: 0 0 8px;
       color: white;
     }
 
@@ -108,6 +122,8 @@
     .edit-form {
       display: none;
       margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
 
     .edit-form input {
@@ -123,6 +139,19 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      min-width: 180px;
+      justify-content: flex-end;
+    }
+
+    .top-pick-badge {
+      display: inline-block;
+      background: gold;
+      color: black;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-left: 8px;
     }
   </style>
 </head>
@@ -135,6 +164,18 @@
     <input name="bonus" placeholder="Bonus" required><br>
     <input name="link" placeholder="Link" required><br>
     <input name="rating" placeholder="Rating" required><br>
+    <input name="logo" placeholder="Logo URL"><br>
+    <input name="badge" placeholder="Badge text (pl. Best for Crypto)"><br>
+    <input name="feature_1" placeholder="Feature 1"><br>
+    <input name="feature_2" placeholder="Feature 2"><br>
+    <input name="feature_3" placeholder="Feature 3"><br>
+    <input name="feature_4" placeholder="Feature 4"><br>
+
+    <label class="checkbox">
+      <input type="checkbox" name="top_pick">
+      Top Pick
+    </label><br>
+
     <button class="add-btn" type="submit">Add Casino</button>
   </form>
 
@@ -148,23 +189,60 @@
     const status = document.getElementById("status");
     const list = document.getElementById("list");
 
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
     async function loadCasinos() {
       const res = await fetch("/api/casinos");
       const data = await res.json();
 
+      if (!Array.isArray(data)) {
+        list.innerHTML = "";
+        status.innerText = "Load failed.";
+        return;
+      }
+
       list.innerHTML = data.map(c => `
         <div class="casino-item">
-          <div class="casino-info" style="flex:1;">
-            <h3>${c.name}</h3>
-            <p><strong>Bonus:</strong> ${c.bonus}</p>
-            <p><strong>Rating:</strong> ⭐ ${c.rating}</p>
-            <p><strong>Link:</strong> ${c.link}</p>
+          <div class="casino-info">
+            <h3>
+              ${escapeHtml(c.name)}
+              ${c.top_pick ? `<span class="top-pick-badge">TOP PICK</span>` : ""}
+            </h3>
+
+            <p><strong>Bonus:</strong> ${escapeHtml(c.bonus)}</p>
+            <p><strong>Rating:</strong> ⭐ ${escapeHtml(c.rating)}</p>
+            <p><strong>Link:</strong> ${escapeHtml(c.link)}</p>
+            <p><strong>Logo:</strong> ${escapeHtml(c.logo || "-")}</p>
+            <p><strong>Badge:</strong> ${escapeHtml(c.badge || "-")}</p>
+            <p><strong>Features:</strong>
+              ${escapeHtml(c.feature_1 || "-")},
+              ${escapeHtml(c.feature_2 || "-")},
+              ${escapeHtml(c.feature_3 || "-")},
+              ${escapeHtml(c.feature_4 || "-")}
+            </p>
 
             <div class="edit-form" id="edit-form-${c.id}">
               <input id="edit-name-${c.id}" value="${escapeHtml(c.name)}" placeholder="Casino name">
               <input id="edit-bonus-${c.id}" value="${escapeHtml(c.bonus)}" placeholder="Bonus">
               <input id="edit-link-${c.id}" value="${escapeHtml(c.link)}" placeholder="Link">
-              <input id="edit-rating-${c.id}" value="${c.rating}" placeholder="Rating">
+              <input id="edit-rating-${c.id}" value="${escapeHtml(c.rating)}" placeholder="Rating">
+              <input id="edit-logo-${c.id}" value="${escapeHtml(c.logo || "")}" placeholder="Logo URL">
+              <input id="edit-badge-${c.id}" value="${escapeHtml(c.badge || "")}" placeholder="Badge text">
+              <input id="edit-feature1-${c.id}" value="${escapeHtml(c.feature_1 || "")}" placeholder="Feature 1">
+              <input id="edit-feature2-${c.id}" value="${escapeHtml(c.feature_2 || "")}" placeholder="Feature 2">
+              <input id="edit-feature3-${c.id}" value="${escapeHtml(c.feature_3 || "")}" placeholder="Feature 3">
+              <input id="edit-feature4-${c.id}" value="${escapeHtml(c.feature_4 || "")}" placeholder="Feature 4">
+
+              <label class="checkbox">
+                <input type="checkbox" id="edit-top-pick-${c.id}" ${c.top_pick ? "checked" : ""}>
+                Top Pick
+              </label>
             </div>
           </div>
 
@@ -176,14 +254,6 @@
           </div>
         </div>
       `).join("");
-    }
-
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
     }
 
     form.addEventListener("submit", async (e) => {
@@ -207,8 +277,8 @@
     });
 
     function toggleEdit(id) {
-      const form = document.getElementById("edit-form-" + id);
-      form.style.display = form.style.display === "block" ? "none" : "block";
+      const editForm = document.getElementById("edit-form-" + id);
+      editForm.style.display = editForm.style.display === "block" ? "none" : "block";
     }
 
     function cancelEdit(id) {
@@ -217,16 +287,18 @@
     }
 
     async function saveCasino(id) {
-      const name = document.getElementById("edit-name-" + id).value;
-      const bonus = document.getElementById("edit-bonus-" + id).value;
-      const link = document.getElementById("edit-link-" + id).value;
-      const rating = document.getElementById("edit-rating-" + id).value;
-
       const body = new URLSearchParams({
-        name,
-        bonus,
-        link,
-        rating
+        name: document.getElementById("edit-name-" + id).value,
+        bonus: document.getElementById("edit-bonus-" + id).value,
+        link: document.getElementById("edit-link-" + id).value,
+        rating: document.getElementById("edit-rating-" + id).value,
+        logo: document.getElementById("edit-logo-" + id).value,
+        badge: document.getElementById("edit-badge-" + id).value,
+        feature_1: document.getElementById("edit-feature1-" + id).value,
+        feature_2: document.getElementById("edit-feature2-" + id).value,
+        feature_3: document.getElementById("edit-feature3-" + id).value,
+        feature_4: document.getElementById("edit-feature4-" + id).value,
+        top_pick: document.getElementById("edit-top-pick-" + id).checked ? "on" : ""
       });
 
       const res = await fetch("/api/casinos/" + id, {
@@ -262,6 +334,5 @@
 
     loadCasinos();
   </script>
-
 </body>
 </html>
