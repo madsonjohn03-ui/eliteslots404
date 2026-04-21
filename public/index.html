@@ -7,163 +7,650 @@
 
   <style>
     :root {
-      --bg: #070b14;
-      --bg-2: #0d1320;
-      --card: rgba(255, 255, 255, 0.06);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --text: #f5f7fb;
-      --muted: #a7b0c3;
-      --gold: #f6c453;
-      --gold-2: #ff9f1a;
-      --green: #15d68c;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      --bg: #050505;
+      --panel: #0d0d0d;
+      --panel-2: #111111;
+      --line: #2a2a2a;
+      --gold: #f2b233;
+      --gold-dark: #d89a22;
+      --white: #f5f5f5;
+      --muted: #b9b9b9;
+      --green: #1ad37c;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(246,196,83,0.12), transparent 28%),
-        linear-gradient(180deg, #060910, #070b14);
-      color: var(--text);
+      background: var(--bg);
+      color: var(--white);
     }
 
-    .shell {
-      width: min(1100px, calc(100% - 20px));
-      margin: auto;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    header {
-      text-align: center;
-      padding: 20px;
-      font-size: 26px;
-      color: gold;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: #070707;
+    }
+
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .brand-icon {
+      color: var(--gold);
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .brand span:last-child {
+      color: var(--gold);
+    }
+
+    .nav {
+      display: flex;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .nav a {
+      color: #ddd;
+      font-size: 17px;
+      position: relative;
+      padding: 8px 0;
+    }
+
+    .nav a.active {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -15px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .admin-btn {
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 16px;
     }
 
     .hero {
       text-align: center;
-      padding: 40px 20px;
+      padding: 38px 20px 26px;
     }
 
     .hero h1 {
-      font-size: 36px;
+      margin: 0;
+      font-size: clamp(44px, 5vw, 72px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      text-transform: uppercase;
     }
 
-    .trust {
-      color: #00ffcc;
-      margin-top: 10px;
+    .hero h1 .gold {
+      color: var(--gold);
+    }
+
+    .hero p {
+      margin: 14px 0 0;
+      color: #d0d0d0;
+      font-size: 18px;
+    }
+
+    .cards-wrap {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 10px 24px 26px;
     }
 
     .cards {
-      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(260px, 1fr));
+      gap: 22px;
     }
 
     .casino-card {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
+      background: #080808;
+      border: 1px solid #555;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      min-height: 560px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
     }
 
-    .featured {
-      border: 2px solid gold;
-      box-shadow: 0 0 20px gold;
+    .casino-card.top {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(242,178,51,.25), 0 0 24px rgba(242,178,51,.12);
     }
 
-    .btn {
-      background: linear-gradient(45deg, var(--gold), var(--gold-2));
-      padding: 12px 20px;
+    .rank-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      width: 44px;
+      height: 44px;
       border-radius: 8px;
-      color: black;
-      font-weight: bold;
-      text-decoration: none;
+      background: var(--gold);
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 22px;
+      z-index: 2;
+    }
+
+    .top-ribbon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--gold);
+      color: #111;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 14px 18px 14px 28px;
+      clip-path: polygon(18px 0, 100% 0, 100% 100%, 0 100%, 0 18px);
+      z-index: 2;
+    }
+
+    .card-head {
+      padding: 64px 24px 18px;
+      text-align: center;
+      border-bottom: 1px solid #2c2c2c;
+    }
+
+    .casino-logo {
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .casino-logo.small {
+      font-size: 30px;
+    }
+
+    .logo-white { color: #f1f1f1; }
+
+    .stars {
+      color: var(--gold);
+      font-size: 18px;
+      letter-spacing: 3px;
+      margin-top: 12px;
+    }
+
+    .card-bonus {
+      padding: 18px 24px 10px;
+      text-align: center;
+    }
+
+    .bonus-label {
+      color: #efefef;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .bonus-main {
+      color: var(--gold);
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.12;
+    }
+
+    .bonus-sub {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.12;
+      margin-top: 4px;
+    }
+
+    .features-box {
+      margin: 12px 18px 16px;
+      border: 1px solid #3a3222;
+      border-radius: 12px;
+      padding: 16px 16px 8px;
+      background: #0a0a0a;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: #f2f2f2;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .check {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #111;
+      font-size: 14px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      padding: 0 18px 18px;
+    }
+
+    .claim-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      width: 100%;
+      min-height: 54px;
+      border-radius: 12px;
+      background: var(--gold);
+      color: #111;
+      font-size: 18px;
+      font-weight: 900;
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,.15);
+    }
+
+    .claim-btn .arrow {
+      font-size: 28px;
+      line-height: 1;
+      margin-top: -1px;
+    }
+
+    .view-all-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 18px 0 10px;
+    }
+
+    .view-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: 14px 26px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 800;
+      background: transparent;
+    }
+
+    .payments {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-top: 18px;
+      padding: 16px 24px;
+    }
+
+    .payments-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 48px;
+      color: #d7d7d7;
+      font-size: 24px;
+      font-weight: 700;
+      opacity: .9;
     }
 
     .footer {
-      margin-top: 40px;
-      padding: 30px 20px;
-      text-align: center;
-      color: #7b8599;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 22px 24px 34px;
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr 1fr;
+      gap: 24px;
+      align-items: start;
+      color: #d0d0d0;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .age-badge {
+      width: 54px;
+      height: 54px;
+      border: 2px solid #aaa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 900;
+      color: #ddd;
+    }
+
+    .aware {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .aware small {
+      display: block;
+      color: #aaa;
+      font-weight: 400;
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .footer-center {
+      font-size: 16px;
+      line-height: 1.55;
+      color: #c7c7c7;
+    }
+
+    .footer-right {
+      text-align: right;
+      font-size: 15px;
+      color: #c9c9c9;
+    }
+
+    .footer-right .links {
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1280px) {
+      .cards {
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+      }
+
+      .footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-left {
+        justify-content: center;
+      }
+
+      .footer-right {
+        text-align: center;
+      }
+
+      .footer-right .links {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .payments-inner {
+        gap: 22px;
+        font-size: 18px;
+      }
+
+      .casino-card {
+        min-height: auto;
+      }
     }
   </style>
 </head>
-
 <body>
-
-<header>🎰 EliteSlots404</header>
-
-<div class="hero">
-  <h1>Top Online Casinos 2026</h1>
-  <div class="trust">⭐ TrustScore 9.8 | 12,341 Players Today</div>
-</div>
-
-<div class="shell cards" id="list"></div>
-
-<div class="footer">
-
-  <div style="margin-bottom:18px; font-size:14px; color:#a7b0c3;">
-    ⚠️ Gambling can be addictive. Play responsibly.
-  </div>
-
-  <div style="display:flex; justify-content:center; gap:12px; margin-bottom:15px; flex-wrap:wrap;">
-
-    <div style="
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-weight: bold;
-      color: white;
-    ">
-      18+
-    </div>
-
-    <a href="https://www.begambleaware.org" target="_blank" style="color: gold;">
-      BeGambleAware.org
-    </a>
-
-  </div>
-
-  <a href="https://www.begambleaware.org" target="_blank">
-    <img src="https://www.begambleaware.org/wp-content/themes/begambleaware/assets/img/logo.svg"
-         style="height:32px; opacity:0.8;">
-  </a>
-
-  <div style="margin-top:20px; font-size:12px;">
-    © 2026 EliteSlots404 — All rights reserved.
-  </div>
-
-</div>
-
-<script>
-async function load() {
-  const res = await fetch("/api/casinos");
-  const data = await res.json();
-
-  const list = document.getElementById("list");
-
-  list.innerHTML = data.map((c, i) => `
-    <div class="casino-card ${i===0 ? 'featured' : ''}">
-      <div>
-        <h2>#${i+1} ${c.name}</h2>
-        <p>${c.bonus}</p>
-        <p>⭐ ${c.rating}</p>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon">♛</div>
+        <div>EliteSlots<span>404</span></div>
       </div>
-      <a class="btn" href="${c.link}" target="_blank">PLAY NOW</a>
+
+      <nav class="nav">
+        <a class="active" href="#">Home</a>
+        <a href="#casino-list">Casinos</a>
+        <a href="#casino-list">Bonuses</a>
+        <a href="#casino-list">VIP</a>
+        <a href="#footer">About Us</a>
+      </nav>
+
+      <a href="/admin.html" class="admin-btn">🔒 Admin Panel</a>
     </div>
-  `).join("");
-}
+  </header>
 
-load();
-</script>
+  <section class="hero">
+    <h1>TOP <span class="gold">ONLINE</span> CASINOS</h1>
+    <p>Exclusive casino bonuses & trusted gambling partners</p>
+  </section>
 
+  <main class="cards-wrap" id="casino-list">
+    <div class="cards" id="list"></div>
+
+    <div class="view-all-wrap">
+      <a href="#casino-list" class="view-all-btn">View All Casinos ⬛</a>
+    </div>
+  </main>
+
+  <section class="payments">
+    <div class="payments-inner">
+      <span>VISA</span>
+      <span>Mastercard</span>
+      <span>Apple Pay</span>
+      <span>bitcoin</span>
+      <span>tether</span>
+      <span>ethereum</span>
+      <span>litecoin</span>
+      <span>ripple</span>
+    </div>
+  </section>
+
+  <footer class="footer" id="footer">
+    <div class="footer-left">
+      <div class="age-badge">18+</div>
+      <div class="aware">
+        BeGambleAware.org
+        <small>Play Responsibly</small>
+      </div>
+    </div>
+
+    <div class="footer-center">
+      Gambling can be addictive. Play responsibly. Only for 18+.<br>
+      We may earn a commission from links on this site at no extra cost to you.<br>
+      Make sure to check the terms and conditions on the casino website.
+    </div>
+
+    <div class="footer-right">
+      © 2026 EliteSlots404. All rights reserved.
+      <div class="links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function buildFeatures(casino, index) {
+      const features = [];
+
+      features.push("Instant Withdraw");
+      features.push("No KYC");
+
+      if (casino.bonus) {
+        features.push(casino.bonus);
+      }
+
+      const extras = [
+        "Card withdraw available",
+        "100+ Crypto Games",
+        "Live Casino Games",
+        "Huge Sportsbook"
+      ];
+
+      if (features.length < 4) {
+        features.push(extras[index % extras.length]);
+      }
+
+      return features.slice(0, 4);
+    }
+
+    function renderLogo(name) {
+      const safeName = (name || "Casino").toUpperCase();
+      return `<span class="logo-white">${safeName}</span>`;
+    }
+
+    function formatBonusLines(bonus) {
+      if (!bonus) {
+        return {
+          main: "WELCOME BONUS",
+          sub: "Exclusive Offer"
+        };
+      }
+
+      const text = bonus.trim();
+
+      if (text.includes("+")) {
+        const parts = text.split("+");
+        return {
+          main: parts[0].trim(),
+          sub: "+ " + parts.slice(1).join("+").trim()
+        };
+      }
+
+      return {
+        main: text,
+        sub: ""
+      };
+    }
+
+    async function load() {
+      const res = await fetch("/api/casinos");
+      const data = await res.json();
+      const list = document.getElementById("list");
+
+      if (!Array.isArray(data) || data.length === 0) {
+        list.innerHTML = "";
+        return;
+      }
+
+      list.innerHTML = data.map((c, i) => {
+        const features = buildFeatures(c, i)
+          .map(item => `
+            <li>
+              <span class="check">✓</span>
+              <span>${item}</span>
+            </li>
+          `)
+          .join("");
+
+        const bonusLines = formatBonusLines(c.bonus);
+
+        return `
+          <article class="casino-card ${i === 0 ? "top" : ""}">
+            <div class="rank-badge">${i + 1}</div>
+            ${i === 0 ? `<div class="top-ribbon">TOP PICK</div>` : ""}
+
+            <div class="card-head">
+              <div class="casino-logo ${String(c.name).length > 10 ? "small" : ""}">
+                ${renderLogo(c.name)}
+              </div>
+              <div class="stars">★★★★★</div>
+            </div>
+
+            <div class="card-bonus">
+              <div class="bonus-label">WELCOME BONUS</div>
+              <div class="bonus-main">${bonusLines.main}</div>
+              ${bonusLines.sub ? `<div class="bonus-sub">${bonusLines.sub}</div>` : ""}
+            </div>
+
+            <div class="features-box">
+              <ul class="features">
+                ${features}
+              </ul>
+            </div>
+
+            <div class="card-footer">
+              <a class="claim-btn" href="${c.link}" target="_blank" rel="noopener noreferrer">
+                <span>Claim Bonus</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    load();
+  </script>
 </body>
 </html>
