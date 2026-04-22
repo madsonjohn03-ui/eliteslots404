@@ -96,7 +96,6 @@
       padding: 0 24px;
     }
 
-    /* TOP PICK HERO BLOCK */
     .featured-wrap {
       padding: 6px 0 28px;
     }
@@ -313,7 +312,6 @@
       margin-top: 1px;
     }
 
-    /* LIST */
     .cards-wrap {
       padding: 4px 0 26px;
     }
@@ -558,6 +556,8 @@
         transform 0.18s ease,
         box-shadow 0.18s ease,
         filter 0.18s ease;
+      border: 0;
+      cursor: pointer;
     }
 
     .claim-btn:hover {
@@ -595,7 +595,6 @@
       transform: translateY(-1px);
     }
 
-    /* PAYMENT */
     .payments-strip {
       position: relative;
       overflow: hidden;
@@ -797,6 +796,8 @@
       border-radius: 10px;
       font-weight: 900;
       white-space: nowrap;
+      border: 0;
+      cursor: pointer;
     }
 
     @media (max-width: 1280px) {
@@ -1035,6 +1036,16 @@
         .replace(/-+/g, "-");
     }
 
+    async function trackClick(id) {
+      try {
+        await fetch(`/api/casinos/${id}/click`, {
+          method: "POST"
+        });
+      } catch (err) {
+        console.error("Click tracking failed", err);
+      }
+    }
+
     function renderFeatured(topCasino) {
       const featuredWrap = document.getElementById("featuredWrap");
       if (!topCasino) {
@@ -1072,7 +1083,7 @@
             </p>
 
             <div class="featured-actions">
-              <a class="featured-claim" href="${topCasino.link}" target="_blank" rel="noopener noreferrer">
+              <a class="featured-claim" href="${topCasino.link}" target="_blank" rel="noopener noreferrer" data-id="${topCasino.id}">
                 <span>Claim Top Bonus</span>
                 <span>→</span>
               </a>
@@ -1097,6 +1108,11 @@
           </div>
         </div>
       `;
+
+      const featuredClaim = featuredWrap.querySelector(".featured-claim");
+      if (featuredClaim) {
+        featuredClaim.addEventListener("click", () => trackClick(topCasino.id));
+      }
     }
 
     async function load() {
@@ -1111,7 +1127,15 @@
       }
 
       const topCasino = data.find(c => c.top_pick) || data[0];
-      document.getElementById("topCasinoBtn").href = topCasino.link;
+      const topCasinoBtn = document.getElementById("topCasinoBtn");
+      topCasinoBtn.href = topCasino.link;
+      topCasinoBtn.setAttribute("data-id", topCasino.id);
+
+      topCasinoBtn.addEventListener("click", function () {
+        const id = this.getAttribute("data-id");
+        if (id) trackClick(id);
+      });
+
       renderFeatured(topCasino);
 
       list.innerHTML = data.map((c, i) => {
@@ -1153,7 +1177,7 @@
             </div>
 
             <div class="card-footer">
-              <a class="claim-btn" href="${c.link}" target="_blank" rel="noopener noreferrer">
+              <a class="claim-btn claim-link" href="${c.link}" target="_blank" rel="noopener noreferrer" data-id="${c.id}">
                 <span>Claim Bonus</span>
                 <span class="arrow">→</span>
               </a>
@@ -1165,6 +1189,13 @@
           </article>
         `;
       }).join("");
+
+      document.querySelectorAll(".claim-link").forEach(link => {
+        link.addEventListener("click", function () {
+          const id = this.getAttribute("data-id");
+          if (id) trackClick(id);
+        });
+      });
     }
 
     load();
