@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <style>
     body {
@@ -143,6 +143,18 @@
       font-weight: 800;
       margin-left: 8px;
     }
+
+    .click-badge {
+      display: inline-block;
+      background: #1d1d1d;
+      color: #f2b233;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-left: 8px;
+      border: 1px solid rgba(242,178,51,0.2);
+    }
   </style>
 </head>
 <body>
@@ -212,6 +224,7 @@
             <h3>
               ${escapeHtml(c.name)}
               ${c.top_pick ? `<span class="top-pick-badge">TOP PICK</span>` : ""}
+              <span class="click-badge">${escapeHtml(c.clicks ?? 0)} clicks</span>
             </h3>
 
             <p><strong>Sort Order:</strong> ${escapeHtml(c.sort_order ?? "-")}</p>
