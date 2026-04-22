@@ -26,7 +26,6 @@ function slugify(text) {
     .replace(/-+/g, "-");
 }
 
-// GET all casinos
 app.get("/api/casinos", async (req, res) => {
   const { data, error } = await supabase
     .from("casinos")
@@ -42,7 +41,6 @@ app.get("/api/casinos", async (req, res) => {
   res.json(data);
 });
 
-// GET one casino by slug
 app.get("/api/casinos/:slug", async (req, res) => {
   const slug = req.params.slug;
 
@@ -63,7 +61,6 @@ app.get("/api/casinos/:slug", async (req, res) => {
   res.json(data);
 });
 
-// ADD casino
 app.post("/api/casinos", async (req, res) => {
   const {
     name,
@@ -122,7 +119,6 @@ app.post("/api/casinos", async (req, res) => {
   res.json({ success: true, data });
 });
 
-// UPDATE casino
 app.put("/api/casinos/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -184,7 +180,6 @@ app.put("/api/casinos/:id", async (req, res) => {
   res.json({ success: true, data });
 });
 
-// DELETE casino
 app.delete("/api/casinos/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -200,7 +195,37 @@ app.delete("/api/casinos/:id", async (req, res) => {
   res.json({ success: true });
 });
 
-// SEO review page route
+app.post("/api/casinos/:id/click", async (req, res) => {
+  const id = req.params.id;
+
+  const { data: current, error: fetchError } = await supabase
+    .from("casinos")
+    .select("clicks")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (fetchError) {
+    return res.status(500).json({ error: fetchError.message });
+  }
+
+  if (!current) {
+    return res.status(404).json({ error: "Casino not found" });
+  }
+
+  const nextClicks = Number(current.clicks || 0) + 1;
+
+  const { error: updateError } = await supabase
+    .from("casinos")
+    .update({ clicks: nextClicks })
+    .eq("id", id);
+
+  if (updateError) {
+    return res.status(500).json({ error: updateError.message });
+  }
+
+  res.json({ success: true, clicks: nextClicks });
+});
+
 app.get("/casino/:slug", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "casino.html"));
 });
