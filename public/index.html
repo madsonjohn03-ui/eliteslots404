@@ -73,7 +73,9 @@
       color: rgba(255,255,255,.025); font-size: clamp(250px, 35vw, 490px); font-weight: 950;
       line-height: 1; letter-spacing: -.11em; pointer-events: none;
     }
-    .hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 70px; position: relative; z-index: 1; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 900px); justify-content: center; align-items: center; position: relative; z-index: 1; }
+    .hero-grid > div:first-child { max-width: 820px; }
+    .hero h1 { max-width: 820px; }
     .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--gold); font-size: 11px; font-weight: 850; letter-spacing: .19em; text-transform: uppercase; }
     .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 12px rgba(167,139,250,.75); }
     .hero h1 {
@@ -375,9 +377,7 @@
           </div>
           <div class="hero-footnote">For adults aged 18+ only. Offers and eligibility can change. Always check the operator’s current terms.</div>
         </div>
-        <div class="hero-art" aria-label="EliteSlots404 casino guide graphic">
-          <img class="hero-logo-image" src="/brand-logo.webp?v=3" alt="EliteSlots404 logo">
-        </div>
+
       </div>
     </section>
 
