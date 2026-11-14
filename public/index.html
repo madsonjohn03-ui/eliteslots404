@@ -256,7 +256,8 @@
     .age-small { flex: 0 0 auto; width: 51px; height: 51px; display: grid; place-items: center; border: 1px solid rgba(114,216,179,.55); border-radius: 50%; color: var(--mint); font-size: 15px; font-weight: 900; }
     .footer { padding: 36px 0 118px; border-top: 1px solid var(--line); }
     .footer-grid { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 28px; align-items: start; }
-    .footer-brand { font-size: 18px; font-weight: 900; letter-spacing: -.05em; }
+    .footer-brand { display:flex; align-items:center; gap:9px; font-size: 18px; font-weight: 900; letter-spacing: -.05em; }
+    .footer-logo { width:42px; height:42px; object-fit:contain; border-radius:50%; }
     .footer-brand span { color: var(--gold); }
     .footer-copy { color: #8f879b; font-size: 10px; line-height: 1.85; }
     .footer-links { display: flex; flex-wrap: wrap; justify-content: end; gap: 14px; color: #beb6cc; font-size: 10px; }
@@ -428,7 +429,7 @@
 
   <footer class="footer" id="footer">
     <div class="shell footer-grid">
-      <div><div class="footer-brand">♛ EliteSlots<span>404</span></div><div class="footer-copy" style="margin-top:9px">Casino information and reviews for adults 18+.</div></div>
+      <div><div class="footer-brand"><img class="footer-logo" src="/brand-logo.webp?v=3" alt=""> EliteSlots<span>404</span></div><div class="footer-copy" style="margin-top:9px">Casino information and reviews for adults 18+.</div></div>
       <div class="footer-copy">EliteSlots404 may receive a commission when visitors use certain links on this website. This does not change the price paid by the visitor. Offers, availability, payment options and eligibility may change; always confirm the current information directly with the operator before registering.</div>
       <div class="footer-links"><a href="/privacy.html">Privacy policy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div>
     </div>
