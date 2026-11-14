@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090711">
+  <meta name="theme-color" content="#08090f">
   <meta name="description" content="Explore casino reviews, welcome offers and key details with EliteSlots404. 18+ only. Play responsibly.">
   <title>EliteSlots404 | Casino Reviews & Offers</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3">
   <style>
     :root {
       color-scheme: dark;
-      --bg: #090711;
-      --bg-soft: #100d1a;
-      --panel: #151121;
-      --panel-2: #1b1629;
+      --bg: #08090f;
+      --bg-soft: #11141e;
+      --panel: #171b26;
+      --panel-2: #202637;
       --line: rgba(255,255,255,.09);
-      --gold: #efbd68;
-      --gold-bright: #ffdb8a;
+      --gold: #a78bfa;
+      --gold-bright: #e9d5ff;
       --violet: #9b72ef;
-      --mint: #72d8b3;
+      --mint: #c4b5fd;
       --white: #f8f6fb;
       --muted: #aaa3b8;
       --max: 1240px;
@@ -40,7 +40,7 @@
     .shell { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
     .announcement {
       min-height: 34px; display: flex; justify-content: center; align-items: center;
-      padding: 7px 16px; background: #0d0a16; border-bottom: 1px solid var(--line);
+      padding: 7px 16px; background: #11131c; border-bottom: 1px solid var(--line);
       color: #bcb4ca; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; text-align: center;
     }
     .announcement strong { color: var(--gold-bright); margin-right: 8px; }
@@ -54,17 +54,17 @@
     .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 21px; font-weight: 900; letter-spacing: -.06em; }
     .brand-mark {
       width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px;
-      background: linear-gradient(145deg, #f4cf8e, #9e6b34); color: #17101c; font-size: 22px;
-      box-shadow: 0 7px 24px rgba(239,189,104,.2);
+      background: linear-gradient(145deg, #e5e7eb, #6d28d9); color: #f8fafc; font-size: 22px;
+      box-shadow: 0 7px 24px rgba(167,139,250,.2);
     }
-    .brand-name span { color: var(--gold); }
+    .brand-name span { color: var(--gold); }\n    .brand-logo { width: 66px; height: 66px; object-fit: contain; flex: 0 0 auto; border-radius: 50%; filter: drop-shadow(0 0 12px rgba(139,92,246,.3)); }\n    .hero-logo-image { display:block; width:min(96%,430px); height:auto; object-fit:contain; filter:drop-shadow(0 0 26px rgba(139,92,246,.28)); }
     .nav-links { display: flex; align-items: center; gap: 30px; color: #c7c0d1; font-size: 13px; font-weight: 650; }
     .nav-links a:hover { color: var(--gold-bright); }
     .nav-cta {
-      padding: 11px 17px; border: 1px solid rgba(239,189,104,.55); border-radius: 10px;
+      padding: 11px 17px; border: 1px solid rgba(167,139,250,.55); border-radius: 10px;
       color: var(--gold-bright); font-size: 12px; font-weight: 800; letter-spacing: .02em;
     }
-    .nav-cta:hover { background: rgba(239,189,104,.1); }
+    .nav-cta:hover { background: rgba(167,139,250,.1); }
     .hero { position: relative; overflow: hidden; padding: 88px 0 58px; }
     .hero::before {
       content: "404"; position: absolute; right: max(-45px, calc((100vw - var(--max))/2 - 20px)); top: -65px;
@@ -73,13 +73,13 @@
     }
     .hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 70px; position: relative; z-index: 1; }
     .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--gold); font-size: 11px; font-weight: 850; letter-spacing: .19em; text-transform: uppercase; }
-    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 12px rgba(114,216,179,.75); }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 12px rgba(167,139,250,.75); }
     .hero h1 {
       max-width: 720px; margin: 21px 0 18px; font-size: clamp(48px, 6.2vw, 82px);
       line-height: .99; letter-spacing: -.075em; font-weight: 900;
     }
     .hero h1 span {
-      background: linear-gradient(100deg, #f7d89e 5%, #c293f4 72%, #9e7ce5 100%);
+      background: linear-gradient(100deg, #d1d5db 5%, #c4b5fd 72%, #7c3aed 100%);
       -webkit-background-clip: text; background-clip: text; color: transparent;
     }
     .hero-copy { max-width: 540px; color: #bcb5c9; font-size: 16px; line-height: 1.8; }
@@ -89,8 +89,8 @@
       padding: 0 20px; border-radius: 11px; font-size: 13px; font-weight: 850; transition: .2s ease;
     }
     .button-primary {
-      color: #211728; background: linear-gradient(135deg, #ffe0a4, #d9a75d);
-      box-shadow: 0 10px 30px rgba(226,176,99,.18);
+      color: #ffffff; background: linear-gradient(135deg, #e5e7eb, #7c3aed);
+      box-shadow: 0 10px 30px rgba(139,92,246,.22);
     }
     .button-primary:hover { transform: translateY(-2px); filter: brightness(1.06); }
     .button-secondary { color: #eee8f8; border: 1px solid var(--line); background: rgba(255,255,255,.025); }
@@ -99,12 +99,12 @@
     .hero-art {
       position: relative; min-height: 400px; display: grid; place-items: center;
       border: 1px solid rgba(198,165,241,.16); border-radius: 28px;
-      background: radial-gradient(circle at 52% 30%, rgba(151,105,218,.22), transparent 46%), linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.012));
+      background: radial-gradient(circle at 52% 48%, rgba(124,58,237,.14), transparent 58%), linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.008));
       box-shadow: 0 34px 90px rgba(0,0,0,.3), inset 0 1px rgba(255,255,255,.08);
       isolation: isolate;
     }
-    .hero-art::before, .hero-art::after {
-      content: ""; position: absolute; border: 1px solid rgba(239,189,104,.2); border-radius: 50%; transform: rotate(-24deg);
+    .hero-art::before, .hero-art::after { display:none;
+      content: ""; position: absolute; border: 1px solid rgba(167,139,250,.2); border-radius: 50%; transform: rotate(-24deg);
     }
     .hero-art::before { width: 310px; height: 310px; }
     .hero-art::after { width: 390px; height: 180px; border-color: rgba(155,114,239,.2); }
@@ -153,8 +153,8 @@
     .featured-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
     .featured-title-row h2 { margin: 0; font-size: clamp(30px, 4vw, 48px); line-height: 1.05; letter-spacing: -.06em; }
     .featured-badge, .badge-pill, .top-pill {
-      padding: 6px 10px; border-radius: 999px; color: var(--gold-bright); border: 1px solid rgba(239,189,104,.35);
-      background: rgba(239,189,104,.07); font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase;
+      padding: 6px 10px; border-radius: 999px; color: var(--gold-bright); border: 1px solid rgba(167,139,250,.35);
+      background: rgba(167,139,250,.07); font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase;
     }
     .featured-bonus-label, .bonus-label, .mini-label { color: #a69bb8; font-size: 10px; font-weight: 800; letter-spacing: .15em; }
     .featured-bonus-label { margin-top: 22px; }
@@ -167,7 +167,7 @@
     .spotlight-index {
       min-height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center;
       border: 1px solid rgba(255,255,255,.09); border-radius: 18px;
-      background: radial-gradient(circle at 50% 10%, rgba(239,189,104,.13), transparent 55%), rgba(8,6,14,.26);
+      background: radial-gradient(circle at 50% 10%, rgba(167,139,250,.13), transparent 55%), rgba(8,6,14,.26);
     }
     .spotlight-index span { color: #a89db8; font-size: 10px; font-weight: 850; letter-spacing: .35em; }
     .spotlight-index strong { font-size: 54px; line-height: 1; color: var(--gold-bright); letter-spacing: -.09em; }
@@ -198,7 +198,7 @@
       transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
     }
     .casino-card:hover { transform: translateY(-4px); border-color: rgba(190,151,237,.35); box-shadow: 0 18px 42px rgba(0,0,0,.24); }
-    .casino-card.top { border-color: rgba(239,189,104,.34); background: linear-gradient(160deg, rgba(239,189,104,.07), transparent 44%), #15101e; }
+    .casino-card.top { border-color: rgba(167,139,250,.34); background: linear-gradient(160deg, rgba(167,139,250,.07), transparent 44%), #15101e; }
     .casino-card[hidden] { display: none; }
     .card-topline { display: flex; justify-content: space-between; align-items: center; min-height: 25px; }
     .card-rank { color: #877e96; font-size: 10px; font-weight: 900; letter-spacing: .12em; }
@@ -221,8 +221,8 @@
     .card-footer { margin-top: 17px; }
     .claim-btn {
       min-height: 45px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      padding: 0 15px; border-radius: 10px; color: #211728;
-      background: linear-gradient(110deg, #f6d69e, #d6a15c); font-size: 12px; font-weight: 900;
+      padding: 0 15px; border-radius: 10px; color: #ffffff;
+      background: linear-gradient(110deg, #e5e7eb, #7c3aed); font-size: 12px; font-weight: 900;
     }
     .claim-btn:hover { filter: brightness(1.07); }
     .claim-btn .arrow { font-size: 18px; }
@@ -245,8 +245,8 @@
     .method-item strong { display: block; margin: 9px 0 5px; font-size: 13px; }
     .method-item p { margin: 0; color: #9991a7; font-size: 11px; line-height: 1.65; }
     .responsible {
-      padding: 26px; border: 1px solid rgba(114,216,179,.18); border-radius: 17px;
-      background: linear-gradient(120deg, rgba(114,216,179,.07), rgba(255,255,255,.015));
+      padding: 26px; border: 1px solid rgba(167,139,250,.18); border-radius: 17px;
+      background: linear-gradient(120deg, rgba(167,139,250,.07), rgba(255,255,255,.015));
       display: flex; align-items: center; justify-content: space-between; gap: 22px;
     }
     .responsible h3 { margin: 0 0 6px; font-size: 17px; }
@@ -266,7 +266,7 @@
     .sticky-inner { min-height: 68px; display: flex; justify-content: space-between; align-items: center; gap: 18px; }
     .sticky-copy strong { display: block; font-size: 12px; }
     .sticky-copy span { color: #938a9f; font-size: 10px; }
-    .sticky-btn { padding: 12px 18px; border-radius: 9px; color: #211728; background: var(--gold); font-size: 11px; font-weight: 900; }
+    .sticky-btn { padding: 12px 18px; border-radius: 9px; color: #ffffff; background: var(--gold); font-size: 11px; font-weight: 900; }
     .age-gate {
       position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 22px;
       background: rgba(5,3,10,.88); backdrop-filter: blur(18px);
@@ -283,7 +283,7 @@
     .age-panel p:not(.age-kicker) { color: #aaa2b7; font-size: 12px; line-height: 1.8; }
     .age-actions { display: grid; gap: 10px; margin-top: 22px; }
     .age-actions button { min-height: 47px; border: 0; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: 900; }
-    .age-yes { color: #211728; background: linear-gradient(110deg, #f6d69e, #d6a15c); }
+    .age-yes { color: #ffffff; background: linear-gradient(110deg, #e5e7eb, #7c3aed); }
     .age-no { color: #b9b1c6; background: rgba(255,255,255,.05); border: 1px solid var(--line) !important; }
     @media (max-width: 950px) {
       .hero-grid { grid-template-columns: 1fr; gap: 36px; }
@@ -298,7 +298,7 @@
       .announcement { font-size: 9px; letter-spacing: .08em; }
       .nav { min-height: 66px; }
       .brand { font-size: 18px; }
-      .brand-mark { width: 34px; height: 34px; }
+      .brand-logo { width: 56px; height: 56px; }
       .nav-links { gap: 13px; font-size: 10px; }
       .nav-links a:not(.nav-cta) { display: none; }
       .nav-cta { padding: 9px 11px; font-size: 10px; }
@@ -348,7 +348,7 @@
   <header class="site-header">
     <nav class="nav shell" aria-label="Main navigation">
       <a class="brand" href="/" aria-label="EliteSlots404 home">
-        <span class="brand-mark">♛</span><span class="brand-name">EliteSlots<span>404</span></span>
+        <img class="brand-logo" src="/brand-logo.webp?v=3" alt="EliteSlots404 logo"><span class="brand-name">EliteSlots<span>404</span></span>
       </a>
       <div class="nav-links">
         <a href="#casino-list">Casinos</a>
@@ -373,7 +373,7 @@
           <div class="hero-footnote">For adults aged 18+ only. Offers and eligibility can change. Always check the operator’s current terms.</div>
         </div>
         <div class="hero-art" aria-label="EliteSlots404 casino guide graphic">
-          <div class="art-orb"><span>♛</span></div>
+          <img class="hero-logo-image" src="/brand-logo.webp?v=3" alt="EliteSlots404 logo">
           <div class="art-tag tag-top"><strong>THE ELITE LIST</strong>Casino offers & reviews</div>
           <div class="art-tag tag-bottom"><strong>18+ ONLY</strong>Play responsibly</div>
         </div>
