@@ -8,6 +8,41 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Block visitors whose country Cloudflare identifies as Hungary.
+// Cloudflare's Network > IP Geolocation setting adds the CF-IPCountry header.
+app.use((req, res, next) => {
+  const visitorCountry = String(req.headers["cf-ipcountry"] || "").toUpperCase();
+
+  if (visitorCountry === "HU") {
+    return res.status(403).type("html").send(`
+      <!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Access unavailable</title>
+          <style>
+            body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box; background: #090711; color: #f8f6fb; font-family: Arial, sans-serif; text-align: center; }
+            main { max-width: 560px; padding: 36px; border: 1px solid #332846; border-radius: 18px; background: #151121; }
+            h1 { color: #efbd68; font-size: 28px; }
+            p { color: #c4bdcf; line-height: 1.7; }
+          </style>
+        </head>
+        <body>
+          <main>
+            <h1>Access unavailable</h1>
+            <p>This website is not available from your current location.</p>
+            <p>18+ only. Please follow the laws and regulations that apply where you are.</p>
+          </main>
+        </body>
+      </html>
+    `);
+  }
+
+  next();
+});
+
 app.use(express.static("public"));
 
 const supabaseUrl = process.env.SUPABASE_URL;
